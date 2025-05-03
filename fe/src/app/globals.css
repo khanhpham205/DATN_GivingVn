@@ -1,35 +1,197 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "tailwindcss";
 
-@import "./account/KYC/KYC.css";
+@import "./account/Account.css";
+@import "../components/footer.css";
+@import "../components/header.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --foreground: #2a2b2a;
+    --background: #ededed;
+    --secondary: #2c3e50;
+
+    --primary: #e43359;
+
+    --invalid: red;
+    --valid: green;
+
+    --minWidthColsSystem: 1180px;
+    --numOfColsSystem: 12;
+    --widthOfColsSystem: 80px;
+    --gapOfColsSystem: 20px;
+
+    --colsOfCard: span 3;
+    --pdpagegrid: span 6;
+
+    --radius: 0.625rem;
+
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+
+    --sidebar: oklch(0.985 0 0);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+
+    --color-sidebar: var(--sidebar);
+    --color-ring: var(--ring);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* PC */
+@media only screen and (min-width: 1180px) {
+    :root {
+        --minWidthColsSystem: 1180px;
+        --numOfColsSystem: 12;
+        --widthOfColsSystem: 80px;
+        --gapOfColsSystem: 20px;
+
+        --colsOfCard: span 3;
+
+        --pdpagegrid: span 6;
+    }
+    .generalinfo {
+        grid-column: span 4;
+    }
+}
+/* TABLET */
+@media only screen and (max-width: 1180px) and (min-width: 721px) {
+    :root {
+        --minWidthColsSystem: 720px;
+
+        --numOfColsSystem: 6;
+        --widthOfColsSystem: 13.8%;
+        --gapOfColsSystem: 3vw;
+
+        --colsOfCard: span 2;
+
+        --pdpagegrid: span 6;
+    }
+    nav {
+        .sunnyhilllogo {
+            grid-column: span 1 !important;
+        }
+        .regis {
+            grid-column: 6/7;
+        }
+        .re_searchbox {
+            display: none !important;
+        }
+    }
+    .generalinfo {
+        grid-column: span 2 !important;
+    }
+
+    #footer {
+        #info {
+            grid-column: span 4;
+        }
+        #holder {
+            display: none;
+        }
+    }
+}
+/* MOBILE */
+@media only screen and (max-width: 720px) {
+    :root {
+        --minWidthColsSystem: 100%;
+        --numOfColsSystem: 6;
+        --widthOfColsSystem: 13.8vw;
+        --gapOfColsSystem: 3vw;
+
+        --colsOfCard: span 3;
+
+        --pdpagegrid: span 6;
+    }
+    nav {
+        .sunnyhilllogo {
+            grid-column: 1/2 !important;
+        }
+        .regis {
+            grid-column: 6/7;
+        }
+        .re_searchbox {
+            display: none !important;
+        }
+    }
+    .generalinfo {
+        grid-column: span 2 !important;
+    }
+
+    #footer {
+        #info {
+            grid-column: span 4;
+        }
+        #holder {
+            display: none;
+        }
+    }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.gridsys {
+    min-width: var(--minWidthColsSystem);
+    display: grid;
+    grid-template-columns: repeat(
+        var(--numOfColsSystem),
+        var(--widthOfColsSystem)
+    );
+    justify-content: center;
+    align-items: center;
+    gap: var(--gapOfColsSystem);
+    hr {
+        width: 100%;
+        grid-column: span var(--numOfColsSystem);
+    }
+    .fullcol {
+        grid-column: span var(--numOfColsSystem);
+    }
+    .card {
+        grid-column: var(--colsOfCard);
+    }
+    p,
+    Link {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+Button {
+    margin: 10px;
 }
 
 
 
-Button{
-  margin: 10px;
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }

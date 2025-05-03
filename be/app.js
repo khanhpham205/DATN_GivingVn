@@ -5,15 +5,26 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var app = express();
 var mongoose = require("./models/DB");
+const passport = require('./configs/passport');
+const session = require('express-session');
+const cors = require('cors');
 require('dotenv').config()
 // ________________________________
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+app.use(cors())
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session({
+    resave: false,
+    saveUninitialized: true,
+}));
 
 // ________________________________
 var r_User = require("./routes/R_users");
@@ -25,7 +36,6 @@ app.use("/chiendich", r_chiendich);
 app.use("/danhmuc", r_danhmuc);
 
 
-
 app.use(function (req, res, next) {
     next(createError(404));
 });
@@ -35,7 +45,6 @@ app.use(function (err, req, res, next) {
     res.locals.error = req.app.get("env") === "development" ? err : {};
 
     res.status(err.status || 500);
-    res.render("error");
 });
 
 module.exports = app;

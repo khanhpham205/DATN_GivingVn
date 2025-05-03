@@ -34,4 +34,4 @@ function ckAdminlvl1(req, res, next) {
     }
 }
 
-module.exports = { auth, ckAdmin };
+module.exports = { auth, ckKOL, ckAdminlvl1 };

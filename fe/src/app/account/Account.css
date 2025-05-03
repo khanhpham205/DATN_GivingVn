@@ -1,0 +1,340 @@
+.KYC_vid_camerabox{
+    position: relative;
+    /* display: inline-block; */
+    
+    width: 500px;
+    height: 500px;
+    background-color: #272727;
+    border-radius: 20px;
+    user-select: none;
+}
+
+.KYC_vid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.KYC_vid_info{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    width: 100%;
+    padding: 10px;
+    p{  
+        display: block;
+        margin: 0;
+    }
+}
+
+
+#f_img_label{
+    position: relative;
+
+    #f_img_preview{
+        width: 80%;
+        justify-self: center;
+        aspect-ratio: 1.5828571429/1 ;
+        object-fit: cover;
+        user-select: none;
+        padding: 10px;
+        overflow: hidden;
+    }
+    #f_img_input_fakeBt{
+        background: blue;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        font-size: 20px;
+        width: fit-content;
+        height: fit-content;
+        margin: auto;
+        position: absolute;
+        top: 0 ;
+        bottom: 0 ;
+        left: 0  ;
+        right: 0  ;
+        border: 5px solid blue ;
+
+        &:hover{
+            color: blue;
+            background: none;
+        }
+    }
+
+}
+
+.KYC_main{
+    justify-self: center;
+    background: #272727;
+    width: 80vw;
+    height: 80vh;
+    height: fit-content;
+}
+
+
+
+/* register */
+@keyframes register_move{
+    0%, 49.99%{
+        opacity: 0;
+        z-index: 1;
+    }
+    50%, 100%{
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+.register{
+    margin-top: 150px;
+    background-color:white;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    justify-self: center;
+    p{
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.3px;
+        margin: 20px 0;
+    }
+    span{
+        font-size: 12px;
+    }
+    button{
+        background-color: var(--primary);
+        color: #fff;
+        font-size: 12px;
+        padding: 10px 45px;
+        border: 1px solid #fff;
+        border-radius: 8px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    form{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 0 40px;
+        height: 100%;
+        input{
+            background: var(--background);
+            border: none;
+            border-bottom: 2px solid rgba(0, 0, 0, 0);
+            margin: 8px 0;
+            padding: 10px 15px;
+            font-size: 13px;
+            border-radius: 8px;
+            width: 100%;
+            outline: none;
+        }
+
+        input:focus{
+            border-bottom: 2px solid var(--invalid);
+        }
+        input.focused:invalid{
+            border-bottom: 2px solid var(--invalid);
+        }
+        input.focused:valid{
+            border-bottom: 2px solid var(--valid);
+        }
+        
+
+        input[type='submit']{
+            background-color: var(--primary);
+            color: #fff;
+            font-size: 12px;
+            padding: 10px 45px;
+            border: 1px solid transparent !important;
+            border-radius: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        input:-webkit-autofill{
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: var(--foreground);
+            border-bottom: 2px #4CAF50 solid;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 20px 20px var(--background);
+        }
+        h1,h2,h3,h4,h5,h6{
+            color: var(--text-color);
+        }
+    }
+    .register_form{
+        position: absolute;
+        top: 0;
+        height: 100%;
+        transition: all 0.6s ease-in-out;
+    }
+    .register_login{
+        left: 0;
+        width: 50%;
+        z-index: 2;
+    }
+    .register_signin{
+        left: 0;
+        width: 50%;
+        opacity: 0;
+        z-index: 1;
+    }
+}
+.toggle-container{
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+    border-radius: 150px 0 0 100px;
+    z-index: 100;
+    .toggle{
+        background-color: var(--primary);
+        height: 100%;
+        position: relative;
+        left: -100%;
+        height: 100%;
+        width: 200%;
+        transition: all 0.6s ease-in-out;
+        .toggle-panel{
+            position: absolute;
+            width: 50%;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            flex-direction:column;
+            top: 0;
+            transition: all 0.6s ease-in-out;
+            p{
+                margin: 20px 10px;
+            }
+        }
+        .toggle-left{
+            transform: translateX(-100%);
+        }
+        .toggle-right{
+            right: 0;
+        }
+    }
+}
+.register.active{
+    .register_login{
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    .register_signin{
+        transform: translateX(100%);
+        opacity: 1;
+        z-index: 5;
+        animation: register_move 0.6s;
+    }
+    .toggle-container{
+        transform: translateX(-100%);
+        border-radius: 0 150px 100px 0;
+    }
+    .toggle{
+        transform: translateX(50%);
+    }
+    .toggle-left{
+        transform: translateX(0);
+    }
+    .toggle-right{
+        transform: translateX(100%);
+    }
+}
+
+.OauthButtonList {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+    button {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 100vw;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        img{
+            margin-right: 5px ;
+        }
+    }
+
+    .google-btn {
+        background-color: white;
+        color: #333;
+        border: 1px solid #ccc;
+    }
+
+    .facebook-btn {
+        background-color: #1877f2; /* Xanh Facebook */
+        color: white;
+    }
+
+    .google-btn:hover {
+        background-color: #f8f8f8;
+    }
+
+    .facebook-btn:hover {
+        background-color: #1454b8; /* Màu xanh đậm hơn khi hover */
+    }
+
+    .Oauthbutton {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 49%;
+        border-radius: 100vw !important;
+        background: none !important;
+        border: 2px solid black !important;
+        color: var(--secondary);
+        padding: 3px;
+        > img {
+            width: 30px;
+            aspect-ratio: 1/1;
+        }
+        p {
+            margin: 0 0 0 5px;
+            color: var(--secondary);
+            font-size: 15px;
+            white-space: nowrap;
+            padding: 0;
+        }
+    }
+    .FBOauth {
+        background-color: blue !important;
+        border: 2px solid blue !important;
+        p {
+            color: white;
+        }
+    }
+    .GGOauth {
+    }
+}
+
+

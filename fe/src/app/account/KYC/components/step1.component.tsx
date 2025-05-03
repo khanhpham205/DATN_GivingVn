@@ -11,8 +11,6 @@ export default function KYC_Step1() {
 
     const [isverified,setisverified] = useState<boolean>(false)
 
-
-
     const imgRef = useRef<HTMLImageElement>(null);
 
     const changeImg = (e:HTMLInputElement)=>{
@@ -30,8 +28,9 @@ export default function KYC_Step1() {
                     type="file" accept="image/*" hidden
                     onChange={(e)=>{changeImg(e.currentTarget)}} 
                 />
+                
 
-                <label id='f_img_label' htmlFor="f_img_input">
+                <label  id='f_img_label' htmlFor="f_img_input">
                     <img id='f_img_preview'  ref={imgRef} 
                         src="/images/KYC_f_imgholder_light.png" 
                         alt="Front cccd Img" 
