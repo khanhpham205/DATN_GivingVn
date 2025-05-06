@@ -1,8 +1,12 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
-
+const fs = require('fs')
+const path = require('path')
+const form = require('form-data')
+const axios = require('axios')
+require('dotenv').config()
 const User = require("../models/M_user");
-const KYC =  require('../models/M_KYC');
+
 
 //GET
 
@@ -120,12 +124,11 @@ const FBOauthsuccess = async(req, res)=>{
 }
 
 const KYC_check = async (req, res) => {
-    const user = req.user;
     try {
-        // const usercheck = await KYC.findOne({user:user._id}).select('name age')
+        const user = req.user;
         const usercheck = await User.findOne({
             user:user._id
-        }).select('name email phonenumber role provider dt_front_cccd dt_back_cccd')
+        }).select('name email phonenumber role provider dt_front_cccd dt_back_cccd verification_status flag')
         return res.status(200).json({usercheck});
     } catch (error) {
         return res.status(500).json({ status: false, error });
@@ -136,26 +139,108 @@ const KYC_step1 = async (req, res) => {
     try {
         const user = req.user;
         const filepath = req.file.path.replace('public', '');
-        const usercheck = await User.findById(user.userId)
-        
-        usercheck.dt_front_cccd = filepath
-        usercheck.verification_status=1
-        await usercheck.save()
+        const fullPath = path.join(__dirname,'../',req.file.path)
+        const formdata = new form();
 
+        formdata.append(
+            'image', 
+            fs.createReadStream(fullPath),
+            {
+                filename: req.file.originalname,
+                contentType: req.file.mimetype
+            }
+        );
+        const a = await axios.post(process.env.KYC_apiurl,formdata,{
+            headers: {
+                ...formdata.getHeaders(),
+                'api_key': process.env.KYC_apikey
+            }
+        })
+        if(a.data.errorCode){
+            return res.status(400).json({Error:a.data.errorMessage});
+        }
+
+        const userdt = await a.data.data[0]
+        if(userdt.type != 'chip_front'){
+            return res.status(400).json({Error:'Vui vòng gửi ảnh CCCD mặt trước'});
+        }
+        
+        const newinfo = {
+            dt_front_cccd            :filepath,
+            verification_status      :1,
+                        
+            info_cccdId              :userdt.id,
+            info_name                :userdt.name,
+            info_DateOfBirth         :userdt.dob,
+            info_sex                 :userdt.sex,
+            info_nationality         :userdt.nationality,
+            info_home                :userdt.home,
+            info_address             :userdt.address,
+            info_DateOfExpire        :userdt.doe,
+            
+        }
+        console.log(userdt);
+        console.log(newinfo);
+        const usercheck = await User.findByIdAndUpdate(user.userId,newinfo)
+
+        
         return res.status(200).json({});
     } catch (error) {return res.status(500).json({error})}
 };
 const KYC_step2 = async (req, res) => {
-    //lay f_img + b img call api + so sanh du lieu
     try {
-       
-        return res.status(200);
-    } catch (error) {
-        return res.status(500).json({ status: false, error });
-    }
+        const user = req.user;
+        const filepath = req.file.path.replace('public', '');
+        const fullPath = path.join(__dirname,'../',req.file.path)
+        const formdata = new form();
+        formdata.append(
+            'image', 
+            fs.createReadStream(fullPath),
+            {
+                filename: req.file.originalname,
+                contentType: req.file.mimetype
+            }
+        );
+        const a = await axios.post(process.env.KYC_apiurl,formdata,{
+            headers: {
+                ...formdata.getHeaders(),
+                'api_key': process.env.KYC_apikey
+            }
+        })
+        if(a.data.errorCode){
+            return res.status(400).json({Error:a.data.errorMessage});
+        }
+
+        const userdt = await a.data.data[0]
+        if(userdt.type != 'chip_back'){
+            return res.status(400).json({Error:'Vui vòng gửi ảnh CCCD mặt sau'});
+        }
+        const checkfront = userdt.mrz_details
+        const userolddt = await User.findById(user.userId)
+        console.log(userolddt);
+        console.log(checkfront);
+        
+        const newinfo = {
+            dt_back_cccd            :filepath,
+            verification_status      :2,
+        }
+        if(
+            checkfront.id  != userolddt.info_cccdId ||
+            checkfront.doe != userolddt.info_DateOfExpire ||
+            checkfront.dob != userolddt.info_DateOfBirth 
+        ){
+            return res.status(401).json({Error:'Thông tin không trùng khớp với CCCD mặt trước'})
+        }
+        userolddt.dt_back_cccd=filepath
+        userolddt.verification_status=2
+        userolddt.info_Features= userdt.features
+        userolddt.info_IssueDate= userdt.issue_date
+        await userolddt.save()
+        return res.status(200).json({});
+    } catch (error) {return res.status(500).json({error})}
 };
 const KYC_step3 = async (req, res) => {
-
+    //
     try {
        
         return res.status(200);

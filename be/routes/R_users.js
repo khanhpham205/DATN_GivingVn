@@ -69,6 +69,7 @@ router.get('/check'     , auth, C_User.check);
 router.get('/kyccheck' , auth, C_User.KYC_check);
 
 router.post('/userkyc1'  , auth, upload.single('f_img'), C_User.KYC_step1);
+router.post('/userkyc2'  , auth, upload.single('b_img'), C_User.KYC_step2);
 
 
 

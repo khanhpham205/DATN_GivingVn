@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       'images.unsplash.com',
       'facebook.com',
       'anotherdomain.com',
+      'scontent.fsgn8-4.fna.fbcdn.net'
       // Thêm domain bạn cần
     ],
   },

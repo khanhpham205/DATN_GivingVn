@@ -7,6 +7,12 @@
     background-color: #272727;
     border-radius: 20px;
     user-select: none;
+    #supportBt{
+        position: absolute;
+        top:10px;
+        right:10px;
+        /* background-color: #F2F2F2; */
+    }
 }
 
 .KYC_vid{
@@ -38,8 +44,8 @@
     #f_img_preview{
         width: 60%;
         justify-self: center;
-        aspect-ratio: 1.5828571429/1 ;
-        object-fit: cover;
+        aspect-ratio: 1385/875 ;
+        object-fit: contain;
         user-select: none;
         padding: 10px;
         overflow: hidden;

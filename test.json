@@ -1,0 +1,26 @@
+{
+    "status": 400,
+    "statusText": "Bad Request",
+    "headers": Headers {
+    
+      'card-type': '[]',
+      'x-fraud-result': '{}',
+      'x-fraud-db-result': '',
+      'x-fraud-db-latency': '',
+      'x-telco-result': '{}',
+
+      'x-ratelimit-remaining-second': '3',
+      'x-ratelimit-limit-second': '4',
+      'x-ratelimit-remaining-minute': '58',
+      'x-ratelimit-limit-minute': '60',
+      'x-ratelimit-limit-free-year': '50',
+      'x-ratelimit-remaining-free-year': '45',
+      'access-control-allow-origin': '*'
+    },
+    body: ReadableStream { locked: true, state: 'closed', supportsBYOB: true },
+    bodyUsed: true,
+    ok: false,
+    redirected: false,
+    type: 'basic',
+    url: 'https://api.fpt.ai/vision/idr/vnm'
+  }

@@ -21,19 +21,21 @@ type Step = "front" | "back" | "video";
 interface StepData {
     label: string;
     key: Step;
+    lvl: number;
 }
 
 const steps: StepData[] = [
-    { key: "front", label: "Front" },
-    { key: "back", label: "Back" },
-    { key: "video", label: "Verify" },
+    { key: "front", label: "Front" ,   lvl:1},
+    { key: "back", label: "Back" ,     lvl:2},
+    { key: "video", label: "Verify" ,  lvl:3},
 ];
 
 interface ProcessStepsProps {
     completedSteps: Step[];
+    isIn: number;
 }
 
-export default function ProcessSteps({ completedSteps }: ProcessStepsProps) {
+export default function ProcessSteps({ completedSteps,isIn }: ProcessStepsProps) {
     const getWavePath = (index: number) => {
         if (index === 0) {
             // Đoạn 1: 1 sóng (mềm)
@@ -49,20 +51,25 @@ export default function ProcessSteps({ completedSteps }: ProcessStepsProps) {
         return "";
     };
     return (
-        <div className="flex items-center justify-center mt-4">
+        <div className="flex items-center justify-center mt-4 fullcol">
             {steps.map((step, index) => {
                 const isDone = completedSteps.includes(step.key);
+                const isprocess = (isIn == index)
+
                 const isLast = index === steps.length - 1;
+                const lineprocess =  isDone &&(step.lvl == isIn) 
 
                 return (
                     <div className="flex items-center" key={step.key}>
                         {/* Vòng tròn bước */}
                         <motion.div
-                            className={`w-16 h-16 rounded-full flex items-center justify-center text-sm font-medium border-4 transition-colors duration-300 ${
-                                isDone
-                                    ? "border-green-500 text-green-600"
-                                    : "border-gray-300 text-gray-500"
-                            }`}
+                            className={`w-16 h-16 rounded-full flex items-center justify-center text-sm font-medium border-4 transition-colors duration-300 
+                                ${isDone? 
+                                    "border-green-500 text-green-600": "border-gray-300 text-gray-500"
+                                }
+                                ${isprocess?"border-yellow-500":""}
+                                `
+                            }
                         >
                             {isDone ? (
                                 <CheckCircle className="w-6 h-6" />
@@ -81,7 +88,7 @@ export default function ProcessSteps({ completedSteps }: ProcessStepsProps) {
                                 >
                                     <path
                                         d={getWavePath(index)}
-                                        stroke="#ccc"
+                                        stroke={(lineprocess)?'#4CAF50':"#ccc"}
                                         strokeWidth="4"
                                         fill="none"
                                         strokeLinecap="round"

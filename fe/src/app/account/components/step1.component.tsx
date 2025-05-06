@@ -5,18 +5,15 @@ import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { TruckElectric } from "lucide-react";
 
-interface KYC_Step1_Props{
-    handleStep : (step:number)=>void;
-    check : ()=>void;
-}
 
-export default function KYC_Step1(prop:KYC_Step1_Props) {   
+
+export default function KYC_Step1(prop:KYC_Step_Props) {   
 
     const imgRef = useRef<HTMLImageElement>(null);
-    const imgInoutRef = useRef<HTMLInputElement>(null);
-    const [file, setFile] = useState({})
-
+    const [file, setFile] = useState<File|null>()
+    
     const changeImg = (e:HTMLInputElement)=>{
         if(e.files instanceof FileList){
             imgRef.current!.src = URL.createObjectURL(e.files[0])
@@ -30,8 +27,7 @@ export default function KYC_Step1(prop:KYC_Step1_Props) {
             const formData = new FormData();
             const jwt = localStorage.getItem('JWT') 
             formData.append('f_img',file)
-
-            console.log(123123);
+            
             const fe = await fetch(`http://localhost:9000/user/userkyc1`,{
                 method:'POST',
                 headers:{
@@ -41,16 +37,26 @@ export default function KYC_Step1(prop:KYC_Step1_Props) {
             })
             if(fe.ok){
                 toast.success('Lưu ảnh thành công')
-                prop.handleStep(2)
+                prop.handleStep(1)
             }
+
         }else{
             toast.warning('Vui lòng chọn ảnh')
         }
     }
-    // useEffect()
+    
+    const Mount=async()=>{
+        const preimg = prop.check() 
+        if(await preimg){
+            imgRef.current!.src = `${process.env.NEXT_PUBLIC_API_URL}/${(await preimg).front}`
+        }
+    }
+    useEffect(()=>{
+        Mount()
+    },[])
     return (<>
-        <div className="KYC_tab KYC_f_img" style={{ textAlign: "center", padding: "20px" }}>
-            <h2>Step 1 KYC</h2>
+        <div className="KYC_tab KYC_f_img fullcol" style={{ textAlign: "center", padding: "20px" }}>
+            <h2>Ảnh mặt trước CCCD</h2>
             <div className="f_img">
 
                 <input id='f_img_input' capture="environment" 
@@ -63,13 +69,14 @@ export default function KYC_Step1(prop:KYC_Step1_Props) {
                         src="/images/KYC_f_imgholder_dark.png" 
                         alt="Front cccd Img" 
                     />
-                    <div id="f_img_input_fakeBt">Front Img</div>
+                    <div id="f_img_input_fakeBt">Ảnh CCCD mặt trước</div>
                 </label>
             </div>
-            <Button onClick={handleSubmit}>Next</Button>
+            <Button onClick={handleSubmit}
+                disabled={(!file)}
 
-
-
+            >Xác nhận</Button>
+            {(prop.done >=1) && <Button variant="secondary" onClick={()=>{prop.move(1)}}>Tiếp theo</Button>}
         </div>
     </>);
 }

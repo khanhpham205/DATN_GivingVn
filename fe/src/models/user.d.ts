@@ -6,3 +6,15 @@ interface M_user{
     avatar: string;
     role:string
 }
+
+//KYC
+interface KYC_user_dt{
+    front:string|null|undefined;
+    back:string|null|undefined;
+}
+interface KYC_Step_Props{
+    handleStep : (step:number)=>void;
+    move:        (page:number)=>void;
+    check :      ()=>Promise<KYC_user_dt>;
+    done :       number;
+}

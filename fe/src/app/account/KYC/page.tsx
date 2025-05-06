@@ -10,11 +10,12 @@ import axios from "axios";
 type Step = "front" | "back" | "video";
 
 export default function KYCPage(){
-    const [ step, setStep ] = useState<number>(1)
+    const [ step, setStep ] = useState<number>(0)
+    const [ isIn, setisIn ] = useState<number>(0)
+    
     const [ process, setprocess ] = useState<Step[]>([])
-    // const [ user, setStep ] = useState<number>(3)
 
-    const checkKYC = async()=>{
+    const checkKYC = async():Promise<KYC_user_dt>=>{
         const jwt = localStorage.getItem('JWT')
         const fe = await fetch(`http://localhost:9000/user/kyccheck`,{
             method:'GET',
@@ -23,48 +24,55 @@ export default function KYCPage(){
             }
         })
         const re = await fe.json()
-        if(fe.ok && re.verification_status){
-            setStep(re.verification_status)
+        
+        if(fe.ok && re.usercheck.verification_status){
+            setStep(re.usercheck.verification_status)
+        }
+        return {
+            front:re.usercheck?.dt_front_cccd,
+            back:re.usercheck?.dt_back_cccd,
         }
     }
     useEffect(()=>{
         checkKYC()
         //call api get step & data
     },[])
+
     useEffect(()=>{
         switch (step) {
-            case 1:
+            case 0:
                 setprocess([])
                 break;
-            case 2:
+            case 1:
                 setprocess(['front'])
                 break;
-            case 3:
+            case 2:
                 setprocess(['front','back'])
                 break;
         }
+        setisIn(step)
     },[step])
 
 
     const renderKYCStep = ()=>{
-        switch (step) {
+        switch (isIn) {
+            case 0:
+                return <KYC_Step1 done={step} move={setisIn} handleStep={setStep} check={checkKYC} />
             case 1:
-                return <KYC_Step1 handleStep={setStep} check={checkKYC} />
+                return <KYC_Step2 done={step} move={setisIn} handleStep={setStep} check={checkKYC} />
             case 2:
-                return <KYC_Step2 handleStep={setStep} check={checkKYC} />
-            case 3:
-                return <KYC_Step3 handleStep={setStep} check={checkKYC} />
+                return <KYC_Step3 done={step} move={setisIn} handleStep={setStep} check={checkKYC} />
             default:
-                return <KYC_Step1 handleStep={setStep} check={checkKYC} />
+                return <KYC_Step1 done={step} move={setisIn} handleStep={setStep} check={checkKYC} />
         }
     }
-    return <div className="KYC_main">
-        <KYC_Process completedSteps={process} />
+    return <div className="KYC_main gridsys">
+        <KYC_Process isIn={isIn} completedSteps={process} />
 
         {renderKYCStep()}
 
-        {/* <Button onClick={()=>{setStep(1)}}>Step1</Button>
-        <Button onClick={()=>{setStep(2)}}>Step2</Button>
-        <Button onClick={()=>{setStep(3)}}>Step3</Button> */}
+        <Button onClick={()=>{setisIn(0)}}>Step1</Button>
+        <Button onClick={()=>{setisIn(1)}}>Step2</Button>
+        <Button onClick={()=>{setisIn(2)}}>Step3</Button>
     </div>
 }
