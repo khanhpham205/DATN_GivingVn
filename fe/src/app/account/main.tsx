@@ -8,6 +8,7 @@ import { useAuth } from '../../Authcontext';
 import Register from "./register";
 import Account from "./account";
 import Loading from "../../components/loadingPage";
+import { toast } from 'react-toastify';
 
 export default function Accountpage(){
     const router = useRouter();
@@ -29,6 +30,7 @@ export default function Accountpage(){
         checkuser()
         localStorage.setItem('JWT',JWTtoken)
         router.push('/')
+        toast.success('Đăng nhập thành công')
     }
 
     return(

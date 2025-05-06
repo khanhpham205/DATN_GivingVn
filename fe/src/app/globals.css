@@ -11,6 +11,7 @@
     --foreground: #2a2b2a;
     --background: #ededed;
     --secondary: #2c3e50;
+    --secondary-background:#F2F2F2;
 
     --primary: #e43359;
 
@@ -181,17 +182,19 @@
     }
 }
 
-Button {
-    margin: 10px;
+input:not([type=submit]),textarea,select{
+    background: var(--secondary-background);
+    border: none;
+    color: var(--secondary);
+    font-size: 15px;
+    margin: 5px 0 ;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
 }
 
-
-
-@layer base {
-    * {
-        @apply border-border outline-ring/50;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+Button {
+    margin: 10px;
 }

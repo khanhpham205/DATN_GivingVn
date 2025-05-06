@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 
 const User = require("../models/M_user");
-// const KYC =  require('../models/M_KYC');
+const KYC =  require('../models/M_KYC');
 
 //GET
 
@@ -48,28 +48,29 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
 
-    const name        = req.body.name.trim()
-    const email       = req.body.email.trim()
-    const password    = req.body.password.trim()
-    const phonenumber = req.body.phonenumber.trim()
+    const name        = req.body.name?.trim()
+    const email       = req.body.email?.trim()
+    const password    = req.body.password?.trim()
+    const phonenumber = req.body.phonenumber?.trim()
 
 
     if (!name || !email || !password || !phonenumber) {
-        return res.status(400).json({ error: "Missing required fields" });
-    }
-    const existingUser = await User.findOne({
-        $or: [{ email }, { phonenumber }],
-    });
-
-    if (existingUser) {
-        return res.status(400).json({ error: "Email or phoneNumber already exists" });
+        return res.status(400).json({ error: "Vui lòng không để trống thông tin" });
     }
     try {
+        const existingUser = await User.findOne({
+            $or: [{ email }, { phonenumber }],
+        });
+
+        if (existingUser) {
+            return res.status(401).json({ error: "Email hoặc phoneNumber đã tồn tại" });
+        }
         const newUser = new User({
             name,
             email,
             phonenumber,
             password,
+            provider:'local'
         });
         newUser.save();
         return res.status(200).json({ status: true });
@@ -80,20 +81,21 @@ const register = async (req, res) => {
 
 const check = async (req, res) => {
     const data = req.user
-    if(data){
-
+    try {
         
-        const user = await User.findById(req.user.userId)
-        data.name = user.name
-        data.email = user.email
-        data.phonenumber = user.phonenumber
-        data.avatar = user.avatar
-        data.role = user.role
-        data._id = user._id
-    }
-
-    return res.status(200).json(data)
-};
+        if(data){
+            const user = await User.findById(req.user.userId)
+            data.name = user.name
+            data.email = user.email
+            data.phonenumber = user.phonenumber
+            data.avatar = user.avatar
+            data.role = user.role
+            data._id = user._id
+        }
+        
+        return res.status(200).json(data)
+    } catch (error) {return res.status(500).json({ status: false, error })}
+}
 
 const GGOauthsuccess = async(req, res)=>{
     const user = req.user;
@@ -117,20 +119,34 @@ const FBOauthsuccess = async(req, res)=>{
     return res.redirect(`http://localhost:3000/account?login=true&token=${token}`);
 }
 
-
-const KYC_step1 = async (req, res) => {
-    const filepath = req.file.path.replace('public', '');
-    console.log(filepath);
-    
-    return res.status(200).json({});
+const KYC_check = async (req, res) => {
+    const user = req.user;
     try {
+        // const usercheck = await KYC.findOne({user:user._id}).select('name age')
+        const usercheck = await User.findOne({
+            user:user._id
+        }).select('name email phonenumber role provider dt_front_cccd dt_back_cccd')
+        return res.status(200).json({usercheck});
     } catch (error) {
         return res.status(500).json({ status: false, error });
     }
 };
-const KYC_step2 = async (req, res) => {
 
-    
+const KYC_step1 = async (req, res) => {
+    try {
+        const user = req.user;
+        const filepath = req.file.path.replace('public', '');
+        const usercheck = await User.findById(user.userId)
+        
+        usercheck.dt_front_cccd = filepath
+        usercheck.verification_status=1
+        await usercheck.save()
+
+        return res.status(200).json({});
+    } catch (error) {return res.status(500).json({error})}
+};
+const KYC_step2 = async (req, res) => {
+    //lay f_img + b img call api + so sanh du lieu
     try {
        
         return res.status(200);
@@ -155,7 +171,9 @@ module.exports = {
     KYC_step1,
     KYC_step2,
     KYC_step3,
+    KYC_check,
     GGOauthsuccess,
     FBOauthsuccess,
-    check
+    check,
+
 }

@@ -35,8 +35,8 @@ const upload = multer({
     storage: storage
 });
 
-
 const C_User = require('../controllers/C_user');
+
 
 // GG OAuth
 router.get('/login/google'   ,
@@ -65,5 +65,18 @@ router.post('/login'     , C_User.login);
 router.get('/check'     , auth, C_User.check);
 
 
+
+router.get('/kyccheck' , auth, C_User.KYC_check);
+
 router.post('/userkyc1'  , auth, upload.single('f_img'), C_User.KYC_step1);
+
+
+
+
+
+
+
+
+
+
 module.exports = router;

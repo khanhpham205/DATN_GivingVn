@@ -3,8 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import { Button } from "react-bootstrap";
+interface KYC_Step3_Props{
+    handleStep : (step:number)=>void;
+    check : ()=>void;
 
-export default function KYC_Step3() {
+}
+
+export default function KYC_Step3(prop:KYC_Step3_Props) {
    
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -175,7 +180,7 @@ export default function KYC_Step3() {
     }, [camIsOpen]);
 
     return (<>
-        <div className="KYC_vid" style={{ textAlign: "center", padding: "20px" }}>
+        <div className="KYC_tab KYC_vid" style={{ textAlign: "center", padding: "20px" }}>
             <div className="KYC_vid_camerabox"
                 style={{
                     width:500,

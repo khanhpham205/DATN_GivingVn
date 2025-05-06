@@ -15,7 +15,7 @@ import { useAuth } from '../../Authcontext';
 
 const Register=()=>{
     const router = useRouter();
-    const { login,checkuser } = useAuth();
+    const { login, checkuser } = useAuth();
 
     useEffect(()=>{
 
@@ -63,7 +63,7 @@ const Register=()=>{
         const password = document.getElementById('sgnin_pass') as HTMLInputElement
 
         const data = {
-            username: name.value,
+            name: name.value,
             email: email.value,
             phonenumber: phonenumber.value,
             password: password.value
@@ -78,8 +78,8 @@ const Register=()=>{
         })
         const res = await fe.json()
         if(fe.ok){
-            toast.success('Đăng ký thành công')
             document.getElementById('login')?.click()
+            toast.success('Đăng ký thành công')
         }
         else{
             toast.warning(res.error)

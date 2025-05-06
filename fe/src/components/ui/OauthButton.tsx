@@ -11,15 +11,9 @@ const BEURL={
 
 export const OauthbuttonFB = () =>{
     return (
-    // <button 
-    //     onClick={()=>{window.location.href = BEURL.FB}} 
-    //     className="Oauthbutton FBOauth"
-    // >
-    //     <img src="/FBlogo.png" alt="GGlogo" />
-    //     {/* <p>Đăng nhập bằng Facebook</p> */}
-    //     <p>Facebook</p>
-    // </button>
-    <button className="google-btn" onClick={()=>{window.location.href=BEURL.GG}}>
+    <button className="google-btn" 
+        onClick={(e)=>{e.preventDefault();window.location.href=BEURL.GG}}
+    >
         <img src="/GGlogo.png" alt="Google" width="20"/>
         Google
     </button>
@@ -28,14 +22,9 @@ export const OauthbuttonFB = () =>{
 }
 export const OauthbuttonGG = () =>{
     return (
-    // <button 
-    //     onClick={()=>{window.location.href = BEURL.GG}} 
-    //     className="Oauthbutton GGOauth"
-    // >
-    //     <img src="/GGlogo.png" alt="GGlogo" />
-    //     {/* <p>Đăng nhập bằng Google</p> */}
-    // </button>
-    <button className="facebook-btn" onClick={()=>{window.location.href=BEURL.FB}}>
+    <button className="facebook-btn" 
+        onClick={(e)=>{e.preventDefault();window.location.href=BEURL.FB}}
+    >
         <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" width="20"/>
         Facebook
     </button>
