@@ -5,37 +5,48 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/Authcontext";
 import { useRouter } from "next/navigation";
 import Loading  from "@/components/loadingPage";
+import AdminSideBar  from "./adminSideBar";
+
 
 const roleWhiteList = [
-    'admin',
-    'adminlvl1'
+    "adminlvl1_Bac",
+    "adminlvl1_Trung",
+    "adminlvl1_Nam", 
+    "admin"
 ]
 
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const {isadmin} = useAuth()
+    const { isadmin, checkuser } = useAuth()
     const router = useRouter()
     const [loading,setloading] = useState<boolean>(true)
 
-
+    const Mount = async()=>{
+        
+    }
+    // console.log(isadmin);
+    
     useEffect(()=>{
         setloading(true)
-        console.log(isadmin);
-        if(!roleWhiteList.includes(String(isadmin))){
+        if(isadmin!=undefined && !roleWhiteList.includes(String( isadmin))){
             router.push('/')
         }
         setTimeout(()=>{
             setloading(false)
         },2000)
-    },[])
+
+    },[isadmin])
 
     return (
-        <div 
-            className="min-h-screen w-full bg-stone-300 overflow-hidden text-black "
-        >
-            {(loading)?<Loading/>:<>{children}</>}
-            
-            
+        <div className="gap-3 p-3 h-screen w-full flex bg-black overflow-hidden text-white ">
+            {(loading)?
+            <Loading/>:
+            <>
+                <AdminSideBar />
+                <div className="flex-1">
+                    {children}
+                </div>
+            </>
+            }
         </div>
     );
 }

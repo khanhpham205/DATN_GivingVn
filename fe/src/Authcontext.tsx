@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // context/AuthContext.tsx
 "use client"
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import {
+    createContext, 
+    useContext, 
+    useState, 
+    ReactNode, 
+    useEffect, 
+} from 'react';
 import { useRouter} from 'next/navigation';
 
 import axios from "axios";
@@ -11,22 +17,29 @@ const apiurl = process.env.NEXT_PUBLIC_API_URL;
 
 type AuthContextType = {
   isLoggedIn: boolean;
-  isadmin: boolean|string;
+  isadmin: boolean|string|undefined;
   login: () => void;
   logout: () => void;
   checkuser:()=> void;
   user: M_user|null;
 };
 
+const roleWhiteList = [
+    "adminlvl1_Bac",
+    "adminlvl1_Trung",
+    "adminlvl1_Nam", 
+    "admin"
+]
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const router = useRouter();
 
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setuser] = useState(null);
-    const [isadmin, setisadmin] = useState<boolean|string>(false);
+    const [isadmin, setisadmin] = useState<boolean|string|undefined>();
+    const [admin, setadmin] = useState<boolean|string>(false);
 
     
     const checkuser = async()=>{
@@ -41,31 +54,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             })
             if(a.status==200 && a.data.userId){
                 setIsLoggedIn(true)
-                switch (a.data.role) {
-                    case 'adminlvl1':
-                        setisadmin('adminlvl1')
-                        break;
-                    case 'admin':
-                        setisadmin('admin')
-                        break;
-                    default:
-                        setisadmin('user')
-                        break;
+                setuser(a.data)
+                
+                if(roleWhiteList.includes(a.data.role)){
+                    setisadmin(a.data.role)
+                }else{
+                    setisadmin(false)
                 }
             }
-            console.log(a.data);
-            
-            setuser(a.data)
             return;
-        } catch (error) {throw error}
+        } catch (error){throw error}
     }
-
 
     const login = () => {
         setIsLoggedIn(true)
         checkuser()
     };
-
 
     const logout = async() => {
         localStorage.removeItem('JWT')
@@ -74,9 +78,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setuser(null)
         // await checkuser()
     };
+    const Mount=async()=>{
+        await checkuser()
+    }
     
     useEffect(()=>{
-        checkuser()
+        Mount()
     },[])
 
     return (

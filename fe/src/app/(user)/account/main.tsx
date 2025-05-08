@@ -27,9 +27,12 @@ export default function Accountpage(){
             toast.success('Đăng nhập thành công')
             login()
         }
-        setIsLoading(false);
-
+        
         setaccstatus('logedin')
+        setTimeout(() => {
+            setIsLoading(false);
+            
+        }, 2000);
     }
     useEffect(()=>{
         

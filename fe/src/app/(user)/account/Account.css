@@ -27,9 +27,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
-    /* width: 100%; */
-    /* padding: 10px; */
     p{  
         display: block;
         margin: 0;
@@ -353,10 +350,12 @@
 
 .userInfo{
     margin-top: 20px;
+    height: fit-content;
     >img{
+        align-self: flex-start;
         grid-column: span 3;
         grid-row: span 5;
-        
+        /* height: 100%; */
         width: 100%;
         background: #F2F2F2;
         aspect-ratio: 1/1;
@@ -365,10 +364,6 @@
 
     #userInfo_Name{
         grid-column: span 9;
-        align-self: start;
-        /* border-radius: 15px; */
-        /* padding: 15px; */
-        /* background: #F2F2F2; */
     }
     #userInfo_Email{
         grid-column: span 9;
@@ -379,6 +374,7 @@
     #userInfo_Phone{
         grid-column: span 9;
     }
+
     button{
         font-size: 18px;
         border-radius: 10px;
@@ -390,57 +386,12 @@
     #userInfo_ChangePass{
         grid-row: 5/6;
         grid-column: 4/6;
-
     }
     #userInfo_Delete{
-        grid-column: 10/12;
-
-        color:white;
-        background-color: red;
-        border: 3px solid red ;
         grid-column: 11/13;
-        color: red;
-        background: none;
-        &:hover{
-            color:white;
-            font-weight: bold;
-            background-color: red;
-            border: 3px solid red ;
-        }
     }
     #userInfo_Edit{
         grid-column: 9/11;
-
-        color:white;
-        background-color: blue;
-        border: 3px solid blue ;
-        &:hover{
-            border:3px solid blue ;
-            font-weight: bold;
-            color: blue;
-            background: none;
-        }
-    }
-}
-
-.tags_handle{
-    margin-top: 20px;
-    display: flex;
-    background-color: #F2F2F2;
-    justify-content: center;
-    border-radius: 20px;
-    padding: 10px;
-    button{
-        margin: 0 5px;
-        grid-column: span 2;
-        &:not(.active){
-            background: grey ;
-            border: 3px solid grey;
-            &:hover{
-                color: blue ;
-                border: 3px solid blue !important;
-            }
-        }
     }
 }
 
@@ -488,5 +439,5 @@
     }
 }
 #form_changepass{
-    
+  
 }

@@ -1,11 +1,12 @@
 export default function Accountpage(){
     
     return(<>
-        This is admin
+        <main >
+
+            This is Admin Dashboard
+        </main>
    
 
 
-
-   
     </>)
 }

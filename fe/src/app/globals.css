@@ -76,9 +76,7 @@
 
         --pdpagegrid: span 6;
     }
-    .generalinfo {
-        grid-column: span 4;
-    }
+
 }
 /* TABLET */
 @media only screen and (max-width: 1180px) and (min-width: 721px) {
@@ -93,29 +91,7 @@
 
         --pdpagegrid: span 6;
     }
-    nav {
-        .sunnyhilllogo {
-            grid-column: span 1 !important;
-        }
-        .regis {
-            grid-column: 6/7;
-        }
-        .re_searchbox {
-            display: none !important;
-        }
-    }
-    .generalinfo {
-        grid-column: span 2 !important;
-    }
-
-    #footer {
-        #info {
-            grid-column: span 4;
-        }
-        #holder {
-            display: none;
-        }
-    }
+    
 }
 /* MOBILE */
 @media only screen and (max-width: 720px) {
@@ -128,29 +104,6 @@
         --colsOfCard: span 3;
 
         --pdpagegrid: span 6;
-    }
-    nav {
-        .sunnyhilllogo {
-            grid-column: 1/2 !important;
-        }
-        .regis {
-            grid-column: 6/7;
-        }
-        .re_searchbox {
-            display: none !important;
-        }
-    }
-    .generalinfo {
-        grid-column: span 2 !important;
-    }
-
-    #footer {
-        #info {
-            grid-column: span 4;
-        }
-        #holder {
-            display: none;
-        }
     }
 }
 

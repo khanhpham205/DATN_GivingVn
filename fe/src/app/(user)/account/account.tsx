@@ -5,28 +5,23 @@ import Link from 'next/link';
 
 import Button from "react-bootstrap/esm/Button";
 import ButtonMUI from '@mui/material/Button';
+
 import { useAuth } from "@/Authcontext";
-import { useState } from "react";
+import {  useState } from "react";
 
 import AccountTags from "./components/A_tags";
 import Account_Edit from './components/A_editaccount';
 import Account_donationList from './components/A_dntList';
 import Account_changepass from './components/A_changepass';
 
-
-
-
 interface accountProp{
     user : M_user;
 }
-
-
   
 
 const Account = (prop:accountProp)=>{
     const { logout, checkuser } = useAuth();
     const { user } = prop;    
-    console.log(user);
     
     const [ShowModel,setShowModel] = useState<boolean>(false)
     const [ShowchangepassModel,setShowchangepassModel] = useState<boolean>(false)
@@ -41,11 +36,36 @@ const Account = (prop:accountProp)=>{
             <h3 id='userInfo_Role' > Role: {user.role}</h3>
             {(!user.flag) && <Link href='/account/KYC'>Xác thực KYC</Link>}
             
-            {/* </Button> */}
-            <ButtonMUI variant="outlined" id='userInfo_ChangePass' onClick={()=>{setShowchangepassModel(true)}}>Đổi mật khẩu</ButtonMUI>
-            {/* <Button id='userInfo_ChangePass' onClick={()=>{setShowModel(true)}} >Edit</Button> */}
-            <Button id='userInfo_Edit' onClick={()=>{setShowModel(true)}} >Edit</Button>
-            <Button id='userInfo_Delete' onClick={()=>{logout();checkuser()}} >Log out</Button>
+            {/* <ButtonMUI 
+                variant="outlined" 
+                id='userInfo_ChangePass' 
+                onClick={()=>{setShowchangepassModel(true)}}
+            >
+                Đổi mật khẩu
+            </ButtonMUI>
+
+            <ButtonMUI 
+                variant="contained" 
+                id='userInfo_Edit' 
+                onClick={()=>{setShowModel(true)}}
+                color={'info'}
+            >
+                Edit
+            </ButtonMUI>
+
+            <ButtonMUI 
+                variant="outlined"  
+                id='userInfo_Delete' 
+                color="error"
+                // size='lar'
+                onClick={()=>{logout();checkuser()}}
+            >
+                Log out
+            </ButtonMUI> */}
+
+            <Button variant="outline-primary"  id='userInfo_ChangePass' onClick={()=>{setShowchangepassModel(true)}} >Đổi mật khẩu</Button>
+            <Button variant='primary' id='userInfo_Edit' onClick={()=>{setShowModel(true)}} >Edit</Button>
+            <Button variant='outline-danger' id='userInfo_Delete' onClick={()=>{logout();checkuser()}} >Log out</Button>
         </div>
 
 
