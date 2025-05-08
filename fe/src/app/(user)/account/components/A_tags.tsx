@@ -29,7 +29,7 @@ const AccountContent = () => {
 
     return (
         <main className="gridsys">
-            <div className="fullcol tags_handle">
+            {/* <div className="fullcol tags_handle">
                 <Button
                     className={(tab===1)?'active':''}
                     onClick={(e) => {
@@ -48,9 +48,9 @@ const AccountContent = () => {
                 >
                     Chiến dịch đã tạo
                 </Button>
-            </div>
+            </div> */}
 
-            <div className="fullcol" style={{paddingTop:20}}>
+            <div className="fullcol" >
                 <GooeyNav
                     items={items}
                     particleCount={8}

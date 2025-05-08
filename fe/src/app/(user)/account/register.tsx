@@ -5,13 +5,13 @@ import Image from 'next/image'
 
 import Button from 'react-bootstrap/Button';
 // import { FcGoogle } from 'react-icons/fc';
-import Oauthbutton from "../../components/ui/OauthButton";
+import Oauthbutton from "@/components/ui/OauthButton";
 
 import { useEffect, useState } from "react";
 import { log } from "console";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
-import { useAuth } from '../../Authcontext';
+import { useAuth } from '@/Authcontext';
 
 const Register=()=>{
     const router = useRouter();

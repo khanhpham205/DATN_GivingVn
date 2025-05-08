@@ -4,7 +4,8 @@ interface M_user{
     email: string
     phonenumber: string;
     avatar: string;
-    role:string
+    role:string;
+    flag:boolean;
 }
 
 //KYC

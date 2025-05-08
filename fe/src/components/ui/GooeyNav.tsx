@@ -87,7 +87,7 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
                 particle.style.setProperty("--time", `${p.time}ms`);
                 particle.style.setProperty("--scale", `${p.scale}`);
 
-                // particle.style.setProperty("--color",`var(--color-1,#2c3e50)`);
+                // particle.style.setProperty("--color",`var(--color-1,white)`);
                 // particle.style.setProperty("--color", `var(--color-${p.color}, #2c3e50)`);
 
                 particle.style.setProperty("--rotate", `${p.rotate}deg`);
@@ -173,8 +173,8 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
     }, [activeIndex]);
 
     return (
-        <div className="gooey-nav-container" ref={containerRef}>
-            <nav>
+        <div className="gooey-nav-container" ref={containerRef} >
+            <nav id='gooey-nav'>
                 <ul ref={navRef}>
                     {items.map((item, index) => (
                         <li

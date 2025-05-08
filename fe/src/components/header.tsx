@@ -17,6 +17,7 @@ export default function Header(){
         <div className="">Danh mục</div>
         <div className="">Chiến dịch</div>
         <div className="">search</div>
+        <Link href='/admin'>admin</Link>
         <Link href='/account' id='nav_register'>
             {(!user)?"Register":
                 <Image 

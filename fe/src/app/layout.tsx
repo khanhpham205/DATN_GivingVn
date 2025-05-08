@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
-import { AuthProvider } from "../Authcontext";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "@/Authcontext";
+
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -20,27 +20,39 @@ export const metadata: Metadata = {
     description: "Charity App From VietNam",
 };
 
-export default function RootLayout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+
+export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
     return (
         <html lang="en">
-            <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-            >
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
                 <AuthProvider>
-                    <Header />
-
-                    {children}
-                </AuthProvider>
+                    
+                {children}
                 <ToastContainer
                     autoClose={3000}
                     position="top-right"
                     pauseOnHover
                 />
+                </AuthProvider>
             </body>
         </html>
     );
+    // return (
+    //     <html lang="en">
+    //         <body
+    //             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+    //         >
+    //             <AuthProvider>
+    //                 <Header />
+
+    //                 {children}
+    //             </AuthProvider>
+    //             <ToastContainer
+    //                 autoClose={3000}
+    //                 position="top-right"
+    //                 pauseOnHover
+    //             />
+    //         </body>
+    //     </html>
+    // );
 }

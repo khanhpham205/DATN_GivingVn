@@ -95,6 +95,7 @@ const check = async (req, res) => {
             data.avatar = user.avatar
             data.role = user.role
             data._id = user._id
+            data.flag = user.flag
         }
         
         return res.status(200).json(data)
@@ -128,7 +129,7 @@ const KYC_check = async (req, res) => {
         const user = req.user;
         const usercheck = await User.findOne({
             user:user._id
-        }).select('name email phonenumber role provider dt_front_cccd dt_back_cccd verification_status flag')
+        }).select('name email phonenumber role provider dt_front_cccd dt_back_cccd verification_status flag ')
         return res.status(200).json({usercheck});
     } catch (error) {
         return res.status(500).json({ status: false, error });

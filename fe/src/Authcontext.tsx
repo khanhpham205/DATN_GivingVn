@@ -53,6 +53,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                         break;
                 }
             }
+            console.log(a.data);
+            
             setuser(a.data)
             return;
         } catch (error) {throw error}

@@ -3,11 +3,11 @@
 import { useSearchParams , useRouter} from 'next/navigation';
 
 import { useEffect, useState } from "react";
-import { useAuth } from '../../Authcontext';
+import { useAuth } from '@/Authcontext';
 
 import Register from "./register";
 import Account from "./account";
-import Loading from "../../components/loadingPage";
+import Loading from "@/components/loadingPage";
 import { toast } from 'react-toastify';
 
 export default function Accountpage(){
