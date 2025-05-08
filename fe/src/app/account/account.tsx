@@ -13,12 +13,18 @@ import AccountTags from "./components/A_tags";
 import Account_Edit from './components/A_editaccount';
 import Account_donationList from './components/A_dntList';
 
+
+
+
 interface accountProp{
     user : M_user;
 }
 
+
+  
+
 const Account = (prop:accountProp)=>{
-    const { logout } = useAuth();
+    const { logout,checkuser } = useAuth();
     const { user } = prop;    
 
     const [ShowModel,setShowModel] = useState<boolean>(false)
@@ -35,8 +41,10 @@ const Account = (prop:accountProp)=>{
             {/* <Button id='' onClick={()=>{}}> */}
             {/* </Button> */}
             <Button id='userInfo_Edit' onClick={()=>{setShowModel(true)}} >Edit</Button>
-            <Button id='userInfo_Delete' onClick={logout} >Log out</Button>
+            <Button id='userInfo_Delete' onClick={()=>{logout();checkuser()}} >Log out</Button>
         </div>
+
+
         {(user.role==='user')?<div className='gridsys'><Account_donationList/></div>
         :
             <AccountTags />

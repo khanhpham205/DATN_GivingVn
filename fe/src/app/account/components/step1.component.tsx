@@ -38,6 +38,7 @@ export default function KYC_Step1(prop:KYC_Step_Props) {
             if(fe.ok){
                 toast.success('Lưu ảnh thành công')
                 prop.handleStep(1)
+                prop.check()
             }
 
         }else{
@@ -46,9 +47,9 @@ export default function KYC_Step1(prop:KYC_Step_Props) {
     }
     
     const Mount=async()=>{
-        const preimg = prop.check() 
-        if(await preimg){
-            imgRef.current!.src = `${process.env.NEXT_PUBLIC_API_URL}/${(await preimg).front}`
+        // const preimg = await prop.check() 
+        if(prop.dturl){
+            imgRef.current!.src = `${process.env.NEXT_PUBLIC_API_URL}/${prop.dturl.front}`
         }
     }
     useEffect(()=>{

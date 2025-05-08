@@ -34,15 +34,16 @@ export default function KYC_Step2(prop:KYC_Step_Props) {
             if(fe.ok){
                 toast.success('Lưu ảnh thành công')
                 prop.handleStep(2)
+                prop.check()
             }
 
         }else{toast.warning('Vui lòng chọn ảnh')}
     }
 
     const Mount=async()=>{
-        const preimg = prop.check() 
-        if(await preimg){
-            imgRef.current!.src = `${process.env.NEXT_PUBLIC_API_URL}/${(await preimg).back}`
+        // const preimg = prop.check() 
+        if(prop.dturl?.back){
+            imgRef.current!.src = `${process.env.NEXT_PUBLIC_API_URL}/${prop.dturl.back}`
         }
     }
     useEffect(()=>{

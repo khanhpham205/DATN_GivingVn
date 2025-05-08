@@ -5,18 +5,18 @@ const UserSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
         email: { type: String, required: true, unique: true },
-        phonenumber: { type: String },
+        phonenumber: { type: String, unique: true },
         password: { type: String },
 
         role: {
             type: String,
             default: "user",
-            enum: ["user", "adminlvl1", "admin"],
+            enum: ["user", "KOL", "adminlvl1", "admin"],
         },
 
-        googleId: { type: String, unique: true, sparse: true },
+        googleId:   { type: String, unique: true, sparse: true },
         facebookId: { type: String, unique: true, sparse: true },
-        avatar: { type: String },
+        avatar:     { type: String },
 
         provider: {
             type: String,
@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema(
         dt_back_cccd:           { type: String },
         dt_vid:                 { type: String },
 
-        info_Type:         { type: String },
+        info_Type:              { type: String },
 
         info_cccdId:            { type: String },
         info_name:              { type: String },

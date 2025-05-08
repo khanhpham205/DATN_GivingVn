@@ -13,7 +13,6 @@ const passport = require('passport');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // console.log(req.user.userId);
         const userDir = path.join('public/KYC', req.user.userId);
         fs.mkdir(userDir, { recursive: true }, (err) => {
             if (err) {
@@ -70,6 +69,7 @@ router.get('/kyccheck' , auth, C_User.KYC_check);
 
 router.post('/userkyc1'  , auth, upload.single('f_img'), C_User.KYC_step1);
 router.post('/userkyc2'  , auth, upload.single('b_img'), C_User.KYC_step2);
+router.post('/userkyc3'  , auth, upload.single('video'), C_User.KYC_step3);
 
 
 

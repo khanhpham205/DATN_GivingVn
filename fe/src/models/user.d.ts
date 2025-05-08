@@ -9,12 +9,13 @@ interface M_user{
 
 //KYC
 interface KYC_user_dt{
-    front:string|null|undefined;
-    back:string|null|undefined;
+    front : string | null | undefined;
+    back  : string | null | undefined;
 }
 interface KYC_Step_Props{
     handleStep : (step:number)=>void;
-    move:        (page:number)=>void;
-    check :      ()=>Promise<KYC_user_dt>;
-    done :       number;
+    move       : (page:number)=>void;
+    check      : ()=>void;
+    done       : number;
+    dturl      : KYC_user_dt | null;
 }

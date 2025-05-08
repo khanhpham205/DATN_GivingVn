@@ -4,6 +4,7 @@ import Account_donationList from "./A_dntList";
 import Account_ownpjList from "./A_ownpjList";
 import { useState } from "react";
 import { useAuth } from "@/Authcontext";
+import GooeyNav from '@/components/ui/GooeyNav'
 
 
 const AccountContent = () => {
@@ -20,6 +21,11 @@ const AccountContent = () => {
                 return <Account_ownpjList    />;
         }
     }
+
+    const items = [
+        { label: "Danh sách từ thiện" , func: ()=>{settab(1);} },
+        { label: "Chiến dịch đã tạo"  , func: ()=>{settab(2);} },
+    ];
 
     return (
         <main className="gridsys">
@@ -42,6 +48,18 @@ const AccountContent = () => {
                 >
                     Chiến dịch đã tạo
                 </Button>
+            </div>
+
+            <div className="fullcol" style={{paddingTop:20}}>
+                <GooeyNav
+                    items={items}
+                    particleCount={8}
+                    particleDistances={[50, 10]}
+                    particleR={100}
+                    initialActiveIndex={0}
+                    animationTime={600}
+                    timeVariance={300}
+                />
             </div>
             {render()}
 

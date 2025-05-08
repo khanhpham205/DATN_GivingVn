@@ -28,18 +28,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setuser] = useState(null);
     const [isadmin, setisadmin] = useState<boolean|string>(false);
 
-    const login = () => {
-        setIsLoggedIn(true)
-    };
-    const logout = () => {
-        
-        setIsLoggedIn(false)
-        setisadmin(false)
-        localStorage.removeItem('JWT')
-    };
+    
     const checkuser = async()=>{
         const jwt = localStorage.getItem('JWT')
-
         try {
             const a = await axios.get(`${apiurl}/user/check`,{
                 headers:{
@@ -48,7 +39,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     'Authorization': `Bearer ${jwt}`
                 }
             })
-            // console.log(a);
             if(a.status==200 && a.data.userId){
                 setIsLoggedIn(true)
                 switch (a.data.role) {
@@ -60,7 +50,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                         break;
                     default:
                         setisadmin('user')
-
                         break;
                 }
             }
@@ -68,6 +57,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             return;
         } catch (error) {throw error}
     }
+
+
+    const login = () => {
+        setIsLoggedIn(true)
+        checkuser()
+    };
+
+
+    const logout = async() => {
+        localStorage.removeItem('JWT')
+        setIsLoggedIn(false)
+        setisadmin(false)
+        setuser(null)
+        // await checkuser()
+    };
+    
     useEffect(()=>{
         checkuser()
     },[])

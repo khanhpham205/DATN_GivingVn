@@ -1,3 +1,9 @@
+.KYC_vid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 .KYC_vid_camerabox{
     position: relative;
     /* display: inline-block; */
@@ -11,24 +17,19 @@
         position: absolute;
         top:10px;
         right:10px;
-        /* background-color: #F2F2F2; */
     }
 }
 
-.KYC_vid{
+.KYC_vid_info{
+    width: 500px;
+
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
 
-.KYC_vid_info{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-
-    width: 100%;
-    padding: 10px;
+    /* width: 100%; */
+    /* padding: 10px; */
     p{  
         display: block;
         margin: 0;

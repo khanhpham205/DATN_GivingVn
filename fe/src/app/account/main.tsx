@@ -13,25 +13,28 @@ import { toast } from 'react-toastify';
 export default function Accountpage(){
     const router = useRouter();
     const searchParams = useSearchParams();
-    const login = searchParams.get("login");
+    const loginp = searchParams.get("login");
     const JWTtoken = searchParams.get("token");
     const [accstatus,setaccstatus] = useState('')
     const [isLoading, setIsLoading] = useState(true);
     
-    const { user, checkuser,isLoggedIn } =  useAuth();
+    const { user, checkuser, login, isLoggedIn } =  useAuth();
     const Mouting = async()=>{
-        setaccstatus('logedin')
+        checkuser()
+        if(loginp && JWTtoken){
+            localStorage.setItem('JWT',JWTtoken)
+            router.push('/')
+            toast.success('Đăng nhập thành công')
+            login()
+        }
         setIsLoading(false);
+
+        setaccstatus('logedin')
     }
     useEffect(()=>{
+        
         Mouting()
     },[])
-    if(login && JWTtoken){
-        checkuser()
-        localStorage.setItem('JWT',JWTtoken)
-        router.push('/')
-        toast.success('Đăng nhập thành công')
-    }
 
     return(
     <>

@@ -2,8 +2,8 @@
 @import "tailwindcss";
 
 @import "./account/Account.css";
-@import "../components/footer.css";
-@import "../components/header.css";
+/* @import "../components/footer.css"; */
+/* @import "../components/header.css"; */
 
 @custom-variant dark (&:is(.dark *));
 

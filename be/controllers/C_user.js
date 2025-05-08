@@ -217,8 +217,6 @@ const KYC_step2 = async (req, res) => {
         }
         const checkfront = userdt.mrz_details
         const userolddt = await User.findById(user.userId)
-        console.log(userolddt);
-        console.log(checkfront);
         
         const newinfo = {
             dt_back_cccd            :filepath,
@@ -240,10 +238,53 @@ const KYC_step2 = async (req, res) => {
     } catch (error) {return res.status(500).json({error})}
 };
 const KYC_step3 = async (req, res) => {
-    //
-    try {
-       
-        return res.status(200);
+    try {        
+        const user = req.user;
+        const userdt = await User.findById(user.userId)
+
+        const filepath = req.file.path.replace('public', '');
+        const fullPath_video = path.join(__dirname,'../',req.file.path)
+
+        const fullPath_img = path.join(__dirname,'../public',userdt.dt_front_cccd)
+
+        const formdata = new form();
+        formdata.append('cmnd', fs.createReadStream(fullPath_img));
+        formdata.append('video',fs.createReadStream(fullPath_video))
+        // return res.status(200).json({})
+        const a = await axios.post(process.env.KYC_apiliveness,formdata,{
+            headers: {
+                ...formdata.getHeaders(),
+                'api_key': process.env.KYC_apikey
+            }
+        })
+        const result = a.data.liveness
+        // console.log(result);
+        // console.log(Boolean(result.is_live));
+        if(Boolean(result.is_live) && result.code == 200 ){
+            const checkisset = await User.find({flag:true, info_cccdId: userdt.info_cccdId })
+            if(checkisset){
+                userdt.flag                 = false;
+                userdt.verification_status  = 0;
+                userdt.role                 = 'user'
+                userdt.dt_vid               = ''
+
+
+                return res.status(402).json({Error:'Thông tin CCCD đã được người khác dùng vui lòng thử lại sau'})
+            }
+
+
+            userdt.flag                 = true
+            userdt.verification_status  = 3
+            userdt.dt_vid               = filepath
+            userdt.role                 = 'KOL'
+            await userdt.save()
+            return res.status(200).json({})
+        }
+        if( result.is_deepfake!='N/A' && Boolean(result.is_deepfake)){
+            return res.status(405).json({Error:'Deepfake detected'})
+        }
+        return res.status(400).json({Error:'Liveness check failed'});
+
     } catch (error) {
         return res.status(500).json({ status: false, error });
     }

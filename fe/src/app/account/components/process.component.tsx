@@ -57,7 +57,8 @@ export default function ProcessSteps({ completedSteps,isIn }: ProcessStepsProps)
                 const isprocess = (isIn == index)
 
                 const isLast = index === steps.length - 1;
-                const lineprocess =  isDone &&(step.lvl == isIn) 
+
+                const lineprocess =  isDone && (step.lvl <= isIn ) 
 
                 return (
                     <div className="flex items-center" key={step.key}>
