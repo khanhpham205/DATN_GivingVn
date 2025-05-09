@@ -13,9 +13,13 @@ const addDanhMuc = async(req,res)=>{
 }
 
 const editDanhMuc = async(req,res)=>{
-    const {id,name,desc} = req.body
+    const id = req.params.id
+    const {name,desc} = req.body
+    console.log(id,name,desc,req.body);
+    
 
-    if(!id,!name,!desc) {return res.status(400).json({Error:'vui lòng nhập đủ thông tin'})}
+
+    if(!id || !name || !desc) {return res.status(400).json({Error:'vui lòng nhập đủ thông tin'})}
     if(!req.admin)  {return res.status(401).json({Error:'Bạn không có quyền thay đổi nội dung này'})}
     try{
         await Danhmuc.findByIdAndUpdate(id,{name,desc})

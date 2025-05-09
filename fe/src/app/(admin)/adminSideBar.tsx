@@ -55,7 +55,7 @@ export default function AdminSideBar() {
 
     return (
         <aside className="h-full sideBar">
-            <div className=" h-100 justify-between rounded-xl w-70 min-w-20 p-3 bg-gray-800 flex flex-col  overflow-hidden">
+            <div className=" h-100 justify-between rounded-xl w-70 min-w-20 p-3 bg-gray-800 flex flex-col overflow-hidden">
                 <div className="">
                     <Link href="/" > 
                         <Image
