@@ -10,12 +10,10 @@ import { use } from "react";
 export default function Header(){
     const {user} = useAuth()
 
-    return <nav className="gridsys">
+    return <nav id='usernav' className="gridsys">
         <Link href='/' style={{gridColumn:'span 2',overflow:'hidden'}} >
             <img src="/GivingVn.png" alt="Home" />
         </Link>
-        <div className="">Danh mục</div>
-        <div className="">Chiến dịch</div>
         <div className="">search</div>
         <Link href='/admin'>admin</Link>
         <Link href='/account' id='nav_register'>

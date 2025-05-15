@@ -18,7 +18,6 @@ const editDanhMuc = async(req,res)=>{
     console.log(id,name,desc,req.body);
     
 
-
     if(!id || !name || !desc) {return res.status(400).json({Error:'vui lòng nhập đủ thông tin'})}
     if(!req.admin)  {return res.status(401).json({Error:'Bạn không có quyền thay đổi nội dung này'})}
     try{

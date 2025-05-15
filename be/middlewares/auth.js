@@ -6,18 +6,17 @@ const JWTSECRET = process.env.JWT_SECRET;
 
 const rolecanadd = [
     "kol",
-    "adminlvl1_Bac",
-    "adminlvl1_Trung",
-    "adminlvl1_Nam", 
+    "adminlvl1_zone0",
+    "adminlvl1_zone1",
+    "adminlvl1_zone2",  
     "admin"
 ]
 const roleadmin = [
-    "adminlvl1_Bac",
-    "adminlvl1_Trung",
-    "adminlvl1_Nam", 
+    "adminlvl1_zone0",
+    "adminlvl1_zone1",
+    "adminlvl1_zone2",  
     "admin"
 ]
-
 
 // Middleware xác thực người dùng
 function auth(req, res, next) {
@@ -42,13 +41,22 @@ function ckKOL(req, res, next) {
 }
 
 function ckcanaddpj(req, res, next) {
-    // if (req.user?.role == 'kol' || req.user?.role=='admin') {
-    if (rolecanadd.includes(req.user.role) ){
-        if(req.user?.role=='kol'){
-            next();
-        }else{
+    if (rolecanadd.includes(req.user.role)){
+        if( req.user.role != 'kol' ){
             req.addforce=true
+            switch (req.user.role) {
+                case 'adminlvl1_Bac':
+                    req.body.zone = 'Bac';
+                    break;
+                case 'adminlvl1_Trung':
+                    req.body.zone = 'Trung';
+                    break;
+                case 'adminlvl1_Nam':
+                    req.body.zone = 'Nam';
+                    break;
+            }
         }
+        next();
     }else{
         return res.status(405);
     }
@@ -58,14 +66,14 @@ function ckcanaddpj(req, res, next) {
 // admin tổng đc phân role admin khu vực cho người khác 
 function ckAdmin(req, res, next) {
 
-    // if (req.user?.role == 'adminlvl1' || req.user?.role == 1) {
     if (roleadmin.includes(req.user?.role)) {
         if(req.user?.role=='admin'){
             req.admin = true
         }
+        req.canaccept = true 
         next();
     }
     return res.status(405);
 }
 
-module.exports = { auth, ckKOL, ckAdmin };
+module.exports = { auth, ckKOL, ckAdmin, ckcanaddpj };

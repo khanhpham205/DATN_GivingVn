@@ -171,7 +171,7 @@ const KYC_step1 = async (req, res) => {
         const newinfo = {
             dt_front_cccd            :filepath,
             verification_status      :1,
-                        
+
             info_cccdId              :userdt.id,
             info_name                :userdt.name,
             info_DateOfBirth         :userdt.dob,
@@ -253,7 +253,6 @@ const KYC_step3 = async (req, res) => {
         const formdata = new form();
         formdata.append('cmnd', fs.createReadStream(fullPath_img));
         formdata.append('video',fs.createReadStream(fullPath_video))
-        // return res.status(200).json({})
         const a = await axios.post(process.env.KYC_apiliveness,formdata,{
             headers: {
                 ...formdata.getHeaders(),
@@ -261,8 +260,6 @@ const KYC_step3 = async (req, res) => {
             }
         })
         const result = a.data.liveness
-        // console.log(result);
-        // console.log(Boolean(result.is_live));
         if(Boolean(result.is_live) && result.code == 200 ){
             const checkisset = await User.find({flag:true, info_cccdId: userdt.info_cccdId })
             if(checkisset){
@@ -274,7 +271,6 @@ const KYC_step3 = async (req, res) => {
 
                 return res.status(402).json({Error:'Thông tin CCCD đã được người khác dùng vui lòng thử lại sau'})
             }
-
 
             userdt.flag                 = true
             userdt.verification_status  = 3

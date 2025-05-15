@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 const { auth, ckKOL, ckAdminlvl1 } = require('../middlewares/auth')
 
 const fs = require('fs');
@@ -8,7 +9,6 @@ var multer = require('multer')
 const allowedFields = ['f_img', 'b_img', 'video'];
 
 const passport = require('passport');
-
 
 
 const storage = multer.diskStorage({
@@ -34,6 +34,7 @@ const upload = multer({
     storage: storage
 });
 
+
 const C_User = require('../controllers/C_user');
 
 
@@ -47,6 +48,7 @@ router.get('/login/google/cb' ,
         console.log('User authenticated successfully:', req.user);
         next();
     },
+    
     C_User.GGOauthsuccess
 );
 
