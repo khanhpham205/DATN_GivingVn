@@ -1,11 +1,6 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "tailwindcss";
 
-/* @import "./account/Account.css"; */
-
-/* @import "../components/footer.css"; */
-/* @import "../components/header.css"; */
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -136,6 +131,9 @@
     }
 }
 
+*{
+    text-decoration: none !important;
+}
 input:not([type=submit]),textarea,select{
     background: var(--secondary-background);
     border: none;

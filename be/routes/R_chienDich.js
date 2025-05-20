@@ -27,12 +27,8 @@ const upload = multer({
 });
 
 
-router.get('/', function(req, res, next) {
-    res.status(200).json({
-        status:true,
-        message:''
-    })
-});
+router.get('/', C_chiendich.getChiendich);
+router.get('/:id', C_chiendich.getChiendichById);
 
 router.post('/add', auth,ckcanaddpj, upload.single('img'), C_chiendich.addChienDich);
 

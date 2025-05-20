@@ -21,12 +21,12 @@ interface Prop {
 function EditDanhmuc(props: Prop) {
     const { ShowUpdateModel, setShowUpdateModel , danhmuc } = props;
 
-    const [ name, setname ] = useState<string | null>("");
-    const [ desc, setdesc ] = useState<string | null>("");
-    const [ id, setid ]     = useState<string|null>();
+    const [ name, setname ] = useState<string | undefined>("");
+    const [ desc, setdesc ] = useState<string | undefined>("");
+    const [ id, setid ]     = useState<string|undefined>();
 
     useEffect(()=>{
-        if(danhmuc){
+        if(!!danhmuc){
             setid(danhmuc._id)
             setname(danhmuc.name)
             setdesc(danhmuc.desc)

@@ -6,8 +6,13 @@ const addDanhMuc = async(req,res)=>{
 
     if(!name,!desc) {return res.status(400).json({Error:'vui lòng nhập đủ thông tin'})}
     if(!req.admin)  {return res.status(401).json({Error:'Bạn không có quyền thay đổi nội dung này'})}
+
     try{
-        await Danhmuc.create({name,desc})
+        const newDanhMuc = new Danhmuc({
+            name,
+            desc
+        })
+        await newDanhMuc.save()
         return res.status(200).json({})
     }catch(error){return res.status(500).json({status:false, error })}
 }

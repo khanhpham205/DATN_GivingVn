@@ -37,7 +37,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     },[isadmin])
 
     return (
-        <div className="gap-3 p-3 h-screen w-full flex bg-black overflow-hidden text-white ">
+        <div className="gap-3 p-3 h-screen w-full flex flex-1 bg-black overflow-hidden text-white ">
             {(loading)?
             <Loading/>:
             <>

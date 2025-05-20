@@ -11,6 +11,8 @@ import { mutate } from 'swr';
 import axios from 'axios';
 dotenv.config()
 const apiurl = process.env.NEXT_PUBLIC_API_URL;
+console.log(apiurl);
+
 
 
 interface Prop {
@@ -102,7 +104,7 @@ function AddDanhmuc(props: Prop) {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" ><input type="submit" style={{background:'none'}}  value="Edit" form='form_edit_book' /></Button>
+                    <Button variant="primary" ><input type="submit" style={{background:'none'}}  value="Thêm" form='form_edit_book' /></Button>
                 </Modal.Footer>
             </Modal>
         </div>

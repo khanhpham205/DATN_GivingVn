@@ -24,7 +24,7 @@ const locationSchema = new  mongoose.Schema({
 const ChiendichSchema = new mongoose.Schema({
         danhmuc: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "danhmucs",
+            ref: "catalogs",
             required: true,
         },
         author: {
@@ -32,10 +32,12 @@ const ChiendichSchema = new mongoose.Schema({
             ref: "users",
             required: true,
         },
+        
         acceptBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
 
         name:    { type: String, required: true, unique: true },
         desc:    { type: String, required: true },
+
         target:  { type: Number, required: true },
         current: { type: Number, default: 0, },
 
@@ -92,6 +94,6 @@ ChiendichSchema.pre("save", function (next) {
     next();
 });
 
-const Chiendich = mongoose.model("Chiendich", ChiendichSchema);
+const Chiendich = mongoose.model("charityCampaigns", ChiendichSchema);
 
 module.exports = Chiendich;

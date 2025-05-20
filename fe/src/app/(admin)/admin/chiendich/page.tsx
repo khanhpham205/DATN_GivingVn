@@ -8,8 +8,8 @@ import Pagination from "@mui/material/Pagination";
 import ButtonMUI from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { EditIcon, SquarePlus, Delete } from "lucide-react";
-import EditModal from "./edit.modal";
+import { EditIcon, SquarePlus,View, Delete } from "lucide-react";
+// import EditModal from "./edit.modal";
 import AddModal from "./add.modal";
 import { toast } from "react-toastify";
 import { PaginationItem } from "@mui/material";
@@ -22,11 +22,12 @@ const DanhmucPage = () => {
         data = [],
         error,
         isLoading,
-    } = useSWR(`${apiurl}/danhmuc/`, fetcher, {
+    } = useSWR(`${apiurl}/chiendich/`, fetcher, {
         revalidateIfStale: true,
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
     });
+
 
     const [showeditmodal, setshoweditmodal] = useState(false);
     const [showaddmodal, setshowaddmodal] = useState(false);
@@ -35,43 +36,51 @@ const DanhmucPage = () => {
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(5);
 
+    const handleViewClick = (a: M_danhmuc) => {
+        toast.success("tính năng chưa hoàn tất");
+    };
+
     const handleEditClick = (a: M_danhmuc) => {
         setdanhmuc(a);
         setshoweditmodal(true);
     };
-
+    
     const handleDeleteClick = (a: M_danhmuc) => {
         toast.success("tính năng chưa hoàn tất");
     };
 
     const columns: GridColDef[] = [
-        { field: "name"  , headerName: "Tên chiến dịch" , flex: 3 },
-        { field: "desc"  , headerName: "Description"    , flex: 3 },
-        { field: "_id"   , headerName: "Danh mục"       , flex: 3 },
-        { field: "count" , headerName: "Target"         , flex: 1 },
-        { field: "count" , headerName: "Current"        , flex: 1 },
         { field: "status", headerName: "Trạng thái"     , flex: 1 },
-        // { field: "createdAt", headerName: "Ngày tạo"    , flex: 1 },
-        // { field: "updatedAt", headerName: "Ngày cập nhật", flex: 1 },
+        { field: "danhmuc", headerName: "Danh mục", flex: 1, renderCell: (params) => params.row.danhmuc?.name || "" },
+        { field: "name"  , headerName: "Tên chiến dịch" , flex: 2 },        
+        { field: "current" , headerName: "Current"        , flex: 1 },
+        { field: "target" , headerName: "Target"         , flex: 1 },
+
+        { field: "endDate"  , headerName: "Ngày kết thúc", flex: 1, renderCell: (params) => {
+            const date = params.row.endDate ? new Date(params.row.endDate) : null;
+            return date ? `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth()+1).toString().padStart(2, '0')}/${date.getFullYear()}` : "";
+        }},
+        { field: "location"  , headerName: "Location", flex: 1, renderCell: (params) => params.row.location.province || "" },
+        { field: "region"  , headerName: "Miền", flex: 1, renderCell: (params) => params.row.location.region || "" },
 
         {
-            field: "action_edit",
-            headerName: "Sửa",
+            field: "actions",
+            headerName: "Hành động",
             type: "actions",
+            flex: 1,
             getActions: (params) => [
+                <GridActionsCellItem
+                    icon={<View />}
+                    label="Xem"
+                    onClick={() => handleViewClick(params.row)}
+                    showInMenu={false}
+                />,
                 <GridActionsCellItem
                     icon={<EditIcon />}
                     label="Sửa"
                     onClick={() => handleEditClick(params.row)}
                     showInMenu={false}
                 />,
-            ],
-        },
-        {
-            field: "action_del",
-            headerName: "Xóa",
-            type: "actions",
-            getActions: (params) => [
                 <GridActionsCellItem
                     icon={<Delete />}
                     label="Xóa"
@@ -87,19 +96,7 @@ const DanhmucPage = () => {
 
     return (
         <>
-            <h2 className="text-center">Danh mục</h2>
-
-            <div className="flex gap-3 my-3">
-                <div className="flex-1 bg-gray-800 rounded p-3">
-                    Tổng số danh mục: {data.length}
-                </div>
-                <div className="flex-1 bg-gray-800 rounded p-3">
-                    Trang hiện tại: {page}
-                </div>
-                <div className="flex-1 bg-gray-800 rounded p-3">
-                    Dòng mỗi trang: {pageSize}
-                </div>
-            </div>
+            <h2 className="text-center">Chiến dịch</h2>
 
             <ButtonMUI
                 variant="outlined"
@@ -163,11 +160,11 @@ const DanhmucPage = () => {
                 />
             </div>
 
-            <EditModal
+            {/* <EditModal
                 ShowUpdateModel={showeditmodal}
                 setShowUpdateModel={setshoweditmodal}
                 danhmuc={danhmuc}
-            />
+            /> */}
             <AddModal
                 ShowUpdateModel={showaddmodal}
                 setShowUpdateModel={setshowaddmodal}

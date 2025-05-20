@@ -15,7 +15,7 @@ export default function Accountpage(){
     const searchParams = useSearchParams();
     const loginp = searchParams.get("login");
     const JWTtoken = searchParams.get("token");
-    const [accstatus,setaccstatus] = useState('')
+    // const [accstatus,setaccstatus] = useState('')
     const [isLoading, setIsLoading] = useState(true);
     
     const { user, checkuser, login, isLoggedIn } =  useAuth();
@@ -28,7 +28,7 @@ export default function Accountpage(){
             login()
         }
         
-        setaccstatus('logedin')
+        // setaccstatus('logedin')
         setTimeout(() => {
             setIsLoading(false);
             
@@ -43,5 +43,6 @@ export default function Accountpage(){
     <>
         {isLoading ? <Loading /> : (user && isLoggedIn ? <Account user={user} /> : <Register />)}
     </>
+
     )
 }

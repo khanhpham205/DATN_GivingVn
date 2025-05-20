@@ -24,7 +24,7 @@ function auth(req, res, next) {
     if (!token) return res.status(401).json({ error: 'vui long dang nhap' });
     
     jwt.verify(token, JWTSECRET, (err, user) => {
-        if (err) return res.status(402).json({ error: 'tai khoang khong ton tai' });
+        if (!!err) return res.status(402).json({ error: 'tai khoang khong ton tai' });
         req.user = user;
         next();
     });
@@ -39,6 +39,7 @@ function ckKOL(req, res, next) {
         return res.status(405);
     }
 }
+
 
 function ckcanaddpj(req, res, next) {
     if (rolecanadd.includes(req.user.role)){
@@ -62,14 +63,15 @@ function ckcanaddpj(req, res, next) {
     }
 }
 
-// Middleware kiểm tra quyền admin khu vuc
 // admin tổng đc phân role admin khu vực cho người khác 
 function ckAdmin(req, res, next) {
 
     if (roleadmin.includes(req.user?.role)) {
         if(req.user?.role=='admin'){
+            console.log('admin');
             req.admin = true
         }
+        console.log('admin khu vực');
         req.canaccept = true 
         next();
     }

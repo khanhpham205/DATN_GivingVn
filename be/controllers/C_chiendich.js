@@ -1,4 +1,7 @@
+const mongoose = require('mongoose')
 const Chiendich = require('../models/M_chiendich')
+require('dotenv').config()
+
 
 const addChienDich = async( req, res )=>{
     const {
@@ -65,6 +68,7 @@ const addChienDich = async( req, res )=>{
         return res.status(200).json({})
     } catch (error) {return res.status(500).json({ status: false, error })}
 }
+
 const acceptChienDich = async( req, res )=>{
     let accept = false;
     
@@ -103,8 +107,41 @@ const acceptChienDich = async( req, res )=>{
     } catch (error) {return res.status(500).json({ status: false, error })}
 }
 
+const getChiendich = async( req, res )=>{
+    // const chiendich = await Chiendich.find({}).populate('author', 'name avatar').sort({createdAt: -1});
+    
+    const chiendich = await Chiendich.find()
+    .populate('danhmuc')
+    .populate('author', 'name avatar')
+    .populate('acceptBy', 'name avatar')
+    
+    try {
+        return res.status(200).json(chiendich);
+    } catch (error) {return res.status(500).json({ status: false, error })}
+}
+
+const getChiendichById = async( req, res )=>{
+    const chiendichID = req.params.id;
+    if(!chiendichID){
+        return res.status(400).json({Error:'Vui lòng nhập đủ thông tin'})
+    }
+    
+    try {
+        const chiendich = await Chiendich.findById(chiendichID)
+        .populate('danhmuc')
+        .populate('author', 'name avatar')
+        .populate('acceptBy', 'name avatar')
+        chiendich.thumbnail = process.env.BASE_URL + chiendich.thumbnail
+    
+        return res.status(200).json(chiendich);
+    } catch (error) {return res.status(500).json({ status: false, error })}
+}
+
 
 module.exports ={
     addChienDich,
     acceptChienDich,
+    getChiendich,
+    getChiendichById
+
 }

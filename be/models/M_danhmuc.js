@@ -6,5 +6,5 @@ const catalogsSchema = new Schema({
     desc: { type: String, required: true},
 });
 
-const Danhmuc = mongoose.model('danhmuc', catalogsSchema);
+const Danhmuc = mongoose.model('catalogs', catalogsSchema);
 module.exports = Danhmuc;
