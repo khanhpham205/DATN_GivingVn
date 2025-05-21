@@ -17,9 +17,9 @@ interface Prop {
     ShowUpdateModel: boolean;
     setShowUpdateModel: (value: boolean) => void;
     danhmuc: M_danhmuc | undefined
-    setdanhmuc:()=> void
+    resetDM:()=> void
 }
-function EditDanhmuc( {ShowUpdateModel, setShowUpdateModel , danhmuc ,setdanhmuc }: Prop) {
+function EditDanhmuc( {ShowUpdateModel, setShowUpdateModel , danhmuc ,resetDM }: Prop) {
 
 
     const [ name, setname ] = useState<string | undefined>("");
@@ -35,7 +35,7 @@ function EditDanhmuc( {ShowUpdateModel, setShowUpdateModel , danhmuc ,setdanhmuc
     },[danhmuc])
 
     const handleClose = () => {
-        setdanhmuc()
+        resetDM()
         setShowUpdateModel(false);
     }
 
