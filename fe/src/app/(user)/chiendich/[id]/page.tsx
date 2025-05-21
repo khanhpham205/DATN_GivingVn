@@ -33,9 +33,7 @@ export default function Chiendichdetail({ params }: Prop) {
         
         setChiendich(data.data);
         setloaded(true)
-
     }
-
 
     useEffect(() => {
         Mount() 
@@ -44,10 +42,19 @@ export default function Chiendichdetail({ params }: Prop) {
 
 
     const donate = async () => {
-        const fe = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/donation/create_VNPay`, {
-            amount,
-            content: "thanh toan",
-        })
+        const jwt = localStorage.getItem('JWT');
+        const fe = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/donation/donate/${id}`, 
+            {
+                amount,
+                content: "thanh toan",
+            },
+            {
+                headers:{
+                    'authorization': `Bearer ${ jwt }`,
+                }
+            }
+        )
 
         window.location.href = fe.data;
     }

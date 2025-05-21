@@ -17,13 +17,14 @@ interface Prop {
     ShowUpdateModel: boolean;
     setShowUpdateModel: (value: boolean) => void;
     danhmuc: M_danhmuc | undefined
+    setdanhmuc:()=> void
 }
-function EditDanhmuc(props: Prop) {
-    const { ShowUpdateModel, setShowUpdateModel , danhmuc } = props;
+function EditDanhmuc( {ShowUpdateModel, setShowUpdateModel , danhmuc ,setdanhmuc }: Prop) {
+
 
     const [ name, setname ] = useState<string | undefined>("");
     const [ desc, setdesc ] = useState<string | undefined>("");
-    const [ id, setid ]     = useState<string|undefined>();
+    const [ id, setid     ] = useState<string | undefined>();
 
     useEffect(()=>{
         if(!!danhmuc){
@@ -31,13 +32,10 @@ function EditDanhmuc(props: Prop) {
             setname(danhmuc.name)
             setdesc(danhmuc.desc)
         }
-        
     },[danhmuc])
 
     const handleClose = () => {
-        // setid(null);
-        // setname(null);
-        // setdesc(null)
+        setdanhmuc()
         setShowUpdateModel(false);
     }
 

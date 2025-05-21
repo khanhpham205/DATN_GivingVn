@@ -32,7 +32,8 @@ app.use(passport.session({
 var r_User = require("./routes/R_users");
 var r_chiendich = require("./routes/R_chienDich");
 var r_danhmuc = require("./routes/R_danhMuc");
-var r_donation = require("./routes/R_thanhtoan");
+// var r_donation = require("./routes/R_thanhtoan");
+var r_donation = require("./routes/R_donation");
 
 app.use("/user", r_User);
 app.use("/chiendich", r_chiendich);

@@ -162,6 +162,7 @@ const DanhmucPage = () => {
                 ShowUpdateModel={showeditmodal}
                 setShowUpdateModel={setshoweditmodal}
                 danhmuc={danhmuc}
+                setdanhmuc={setdanhmuc}
             />
             <AddModal
                 ShowUpdateModel={showaddmodal}
