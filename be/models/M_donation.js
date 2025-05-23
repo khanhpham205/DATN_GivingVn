@@ -20,20 +20,10 @@ const donationsSchema = new Schema({
         type: String, 
         enum: ['vnpay', 'momo'],
     },
-    transactionId: { 
-        type: String, 
-        required: true, 
-        unique: true 
-    },
-
-
-    transactionId:        { type: String, unique: true },
-    transactionDate:      { type: Date },
-    transactionStatus:    { type: String },
-    transactionCode:      { type: String },
-    transactionMessage:   { type: String },
+    transactionId:   { type: String, required: true },
+    transactionDate: { type: Date },
 });
 
 
-const Danhmuc = mongoose.model('donations', donationsSchema);
-module.exports = Danhmuc;
+const Donation = mongoose.model('donations', donationsSchema);
+module.exports = Donation;

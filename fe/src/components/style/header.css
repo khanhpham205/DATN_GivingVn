@@ -3,7 +3,7 @@ nav#usernav{
     height: 100px;
 }
 #nav_register{
-    grid-column: 12/13;
+    /* grid-column: 12/13; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,7 +11,7 @@ nav#usernav{
     height: 100%;
     width: 100%;
     >img{
-        width: 70%;
+        /* width: 70%; */
         aspect-ratio: 1/1;
         border-radius: 100vw;
         border: 2px solid var(--secondary);
@@ -25,15 +25,15 @@ nav#usernav{
 }
 /* TABLET */
 @media only screen and (max-width: 1180px) and (min-width: 721px) {
-    #nav_register{
+    /* #nav_register{
         grid-column: 6/7;
-    }
+    } */
     
     
 }
 /* MOBILE */
 @media only screen and (max-width: 720px) {
-    #nav_register{
+    /* #nav_register{
         grid-column: 6/7;
-    }
+    } */
 }

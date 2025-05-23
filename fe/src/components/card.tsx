@@ -25,10 +25,10 @@ export default function Card( {item} : Prop) {
     return (
         // card cho gridsystem 12cols trong global.css
         <Link href={`/chiendich/${item._id}`}  className="card relative overflow-hidden border-0">
-            <img className='rounded-lg ' src={img} alt="thumnailcard" />
+            <img className='rounded-lg aspect-square object-cover' src={img} alt="thumnailcard" />
             
             {/* thong tin nha tu thien */}
-            <div className="relative h-10 flex  items-end">
+            <div className="relative flex items-end ">
 
                 <div className="w-15 absolute top-0 -translate-y-1/2 left-4  flex items-end gap-2 ">
                     <Image 
@@ -37,13 +37,15 @@ export default function Card( {item} : Prop) {
                         src={item.author.avatar} alt="anh"
                     /> 
                 </div>
-                <div className="pl-20 "></div>
-                <h5 >{item.author.name}</h5>
+                <div className="w-20 "></div>
+                <p className='font-bold ' >{item.author.name}</p>
             </div>
+
+
 
             {/* process bar & info */}
             <div className=" mt-1 flex flex-col pb-3 ">
-                <h5 className="mt-2">{item.name}</h5>
+                <h5 className="mt-2">{item.name}</h5> 
 
                 {/* process */}
                 <div className="relative h-4 bg-gray-200 rounded-full flex overflow-hidden">

@@ -145,9 +145,6 @@ export default function Chiendichdetail({ params }: Prop) {
                             />
                             <Button variant="contained" onClick={donate}>Ủng hộ</Button>
                         </div>
-                        {amount + chiendich.current}
-                        /
-                        {chiendich.target}
                     </div>
 
 

@@ -18,6 +18,7 @@
     --numOfColsSystem: 12;
     --widthOfColsSystem: 80px;
     --gapOfColsSystem: 20px;
+    --paddingColsSystem: 0;
 
     --colsOfCard: span 3;
     --pdpagegrid: span 6;
@@ -60,11 +61,13 @@
 }
 
 /* PC */
-@media only screen and (min-width: 1180px) {
+@media only screen and (min-width: 1024px) {
     :root {
-        --minWidthColsSystem: 1180px;
+        --paddingColsSystem: 0;
+
+        --minWidthColsSystem: 1024px;
         --numOfColsSystem: 12;
-        --widthOfColsSystem: 80px;
+        --widthOfColsSystem: 67px;
         --gapOfColsSystem: 20px;
 
         --colsOfCard: span 3;
@@ -73,13 +76,16 @@
     }
 
 }
-/* TABLET */
-@media only screen and (max-width: 1180px) and (min-width: 721px) {
+/* TABLET / mobile */
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
     :root {
-        --minWidthColsSystem: 720px;
+        --paddingColsSystem: 5px;
+
+        --minWidthColsSystem: 768px;
 
         --numOfColsSystem: 6;
-        --widthOfColsSystem: 13.8%;
+        /* --widthOfColsSystem: 13.8%; */
+        --widthOfColsSystem: minmax(0, 1fr);
         --gapOfColsSystem: 3vw;
 
         --colsOfCard: span 2;
@@ -89,11 +95,14 @@
     
 }
 /* MOBILE */
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 768px) {
     :root {
+        --paddingColsSystem: 5px;
+
         --minWidthColsSystem: 100%;
         --numOfColsSystem: 6;
-        --widthOfColsSystem: 13.8vw;
+        /* --widthOfColsSystem: 13.8vw; */
+        --widthOfColsSystem: minmax(0, 1fr);
         --gapOfColsSystem: 3vw;
 
         --colsOfCard: span 3;
@@ -103,13 +112,15 @@
 }
 
 .gridsys {
-    min-width: var(--minWidthColsSystem);
     display: grid;
+    padding: var(--paddingColsSystem);
+    box-sizing: border-box;
+    min-width: var(--minWidthColsSystem);
     grid-template-columns: repeat(
         var(--numOfColsSystem),
         var(--widthOfColsSystem)
     );
-    justify-content: center;
+    justify-content: center ;
     align-items: center;
     gap: var(--gapOfColsSystem);
     hr {

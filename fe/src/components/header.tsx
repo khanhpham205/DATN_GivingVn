@@ -6,6 +6,7 @@ import { useAuth } from "@/Authcontext";
 import Image from "next/image";
 import './style/header.css'
 import { use } from "react";
+import { Wallet } from "lucide-react";
 
 export default function Header(){
     const {user} = useAuth()
@@ -14,17 +15,37 @@ export default function Header(){
         <Link href='/' style={{gridColumn:'span 2',overflow:'hidden'}} >
             <img src="/GivingVn.png" alt="Home" />
         </Link>
-        <div className="">search</div>
         <Link href='/admin'>admin</Link>
-        <Link href='/account' id='nav_register'>
-            {(!user)?"Register":
-                <Image 
-                    src={user.avatar?`${user.avatar}`:'/user.png'} 
-                    width={300} height={300} alt="" 
-                    
+        {(!user)?
+            <Link href='/account' id='nav_register'
+                className='lg: col-start-11 col-end-13'
+            >Register</Link>
+        :
+            <>
+                <Link href='/account'
+                    id='nav_register'
+                    className='
+                        col-start-5  
+                        lg:col-start-11
+                    '
+                >
+                    <Image 
+                        className='
+                            aspect-square
+                            w-[50%]
+                            lg:w-[70%]
+                        '
+                        width={300} height={300} alt="" 
+                        src={user.avatar?`${user.avatar}`:'/user.png'} 
+                    />
+                </Link>
+
+                <Wallet 
+                    className='w-full lg:col-start-12 cursor-pointer'
                 />
-            }
-        </Link>
+            </>
+        }
+        
 
     </nav>
 }
