@@ -16,24 +16,22 @@ const roleWhiteList = [
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const { isadmin, checkuser } = useAuth()
+    const { user, isadmin, checkuser } = useAuth()
     const router = useRouter()
     const [loading,setloading] = useState<boolean>(true)
-
+    
     const Mount = async()=>{
         
-    }
-    // console.log(isadmin);
-    
+    }    
     useEffect(()=>{
+        console.log(isadmin);
         setloading(true)
-        if(isadmin!=undefined && !roleWhiteList.includes(String( isadmin))){
+        if( !roleWhiteList.includes(String(isadmin))){
             router.push('/')
         }
         setTimeout(()=>{
             setloading(false)
         },2000)
-
     },[isadmin])
 
     return (

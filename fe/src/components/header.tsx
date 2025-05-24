@@ -11,20 +11,26 @@ import { Wallet } from "lucide-react";
 export default function Header(){
     const {user} = useAuth()
 
-    return <nav id='usernav' className="gridsys">
+    return <nav id='usernav' className="gridsys select-text">
         <Link href='/' style={{gridColumn:'span 2',overflow:'hidden'}} >
             <img src="/GivingVn.png" alt="Home" />
         </Link>
         <Link href='/admin'>admin</Link>
+
         {(!user)?
-            <Link href='/account' id='nav_register'
-                className='lg: col-start-11 col-end-13'
+            <Link href='/account'
+                className='
+                    text-black flex justify-center items-center w-full h-full
+                    col-start-6 
+                    lg:col-start-11 lg:col-end-13
+                '
             >Register</Link>
         :
             <>
                 <Link href='/account'
-                    id='nav_register'
+                    // id='nav_register'
                     className='
+                        flex justify-center items-center w-full h-full
                         col-start-5  
                         lg:col-start-11
                     '
@@ -32,6 +38,7 @@ export default function Header(){
                     <Image 
                         className='
                             aspect-square
+                            rounded-full
                             w-[50%]
                             lg:w-[70%]
                         '

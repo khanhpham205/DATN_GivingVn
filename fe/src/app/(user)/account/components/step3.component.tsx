@@ -41,8 +41,6 @@ export default function KYC_Step3(prop: KYC_Step_Props) {
     const [lastFaceDetected, setLastFaceDetected] = useState<number>(0);
     const [maxRecordingTime] = useState<number>(10000); // 10 seconds for video recording
     const [recordStartTime, setRecordStartTime] = useState<number>(0);
-    
-    // const [recordErr, setRecordErr] = useState<string>('');
     const recordErr = useRef<string>('');
     const userstop = useRef<boolean>(false);
     // const [userstop, setuserstop] = useState<boolean>(false);
@@ -169,6 +167,7 @@ export default function KYC_Step3(prop: KYC_Step_Props) {
         };
     }, [cameraStream]);
 
+
     useEffect(() => {
         const video = videoRef.current;
         const canvas = canvasRef.current;
@@ -184,32 +183,21 @@ export default function KYC_Step3(prop: KYC_Step_Props) {
                 lastCheck = timestamp;
                 const detections = await faceapi
                     .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions({ inputSize: 160 }))
-                    .withFaceLandmarks(true);
+                    .withFaceLandmarks(true);                   
 
                 const context = canvas.getContext("2d");
+
                 context?.clearRect(0, 0, canvas.width, canvas.height);
 
                 const resizedDetections = faceapi.resizeResults(detections, displaySize);
+                
                 if (context && resizedDetections.length > 0 && support) {
                     faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
                 }
+
                 setWarning('')
                 if (detections.length === 1) {
                     setLastFaceDetected(Date.now());
-                    // const landmarks = detections[0].landmarks;
-                    // const nose = landmarks.getNose()[3];
-                    // const leftEye = landmarks.getLeftEye();
-                    // const rightEye = landmarks.getRightEye();
-                    // const distToLeft = Math.hypot(nose.x - leftEye[0].x, nose.y - leftEye[0].y);
-                    // const distToRight = Math.hypot(nose.x - rightEye[3].x, nose.y - rightEye[3].y);
-
-                    // if (distToLeft > distToRight + 7) {
-                    //     setDirection("👈 Quay sang trái");
-                    // } else if (distToRight > distToLeft + 7) {
-                    //     setDirection("👉 Quay sang phải");
-                    // } else {
-                    //     setDirection("👁️ Nhìn thẳng");
-                    // }
                 } else if (detections.length > 1) {
                     setWarning('')
                     setWarning("⚠️ Phát hiện nhiều người - chỉ chấp nhận 1 khuôn mặt!");
@@ -221,7 +209,6 @@ export default function KYC_Step3(prop: KYC_Step_Props) {
             if (IsRecording && Date.now() - lastFaceDetected > 2000) {
                 stopRecording();
                 recordErr.current='Dừng quay video'
-                // setRecordErr(" Dừng quay video");
             }
 
             // Check if the video has been recording for more than the max recording time
@@ -234,12 +221,18 @@ export default function KYC_Step3(prop: KYC_Step_Props) {
         animationId = requestAnimationFrame(detectLoop);
 
         return () => cancelAnimationFrame(animationId);
+        
     }, [camIsOpen, support, IsRecording, lastFaceDetected, recordStartTime, maxRecordingTime]);
 
     return (
-        <div className="KYC_tab KYC_vid fullcol" style={{ textAlign: "center", padding: "20px" }}>
+        <div className="KYC_tab KYC_vid fullcol flex flex-col items-center" 
+            style={{ 
+                textAlign: "center", 
+                padding: "20px",
+            }}
+        >
             <h2>Xác thực khuôn mặt</h2>
-            <div className="KYC_vid_camerabox" style={{ width: 500, height: 500 }}>
+            <div className="KYC_vid_camerabox relative flex " style={{ width: 500, height: 500 }}>
                 <video
                     ref={videoRef}
                     autoPlay
@@ -247,15 +240,26 @@ export default function KYC_Step3(prop: KYC_Step_Props) {
                     playsInline
                     width="500"
                     height="500"
-                    style={{ objectFit: "cover", borderRadius: "12px", transform: "scaleX(-1)" }}
+                    style={{ 
+                        objectFit: "cover", 
+                        borderRadius: "12px", 
+                        transform: "scaleX(-1)" ,
+                        height:'100%',
+
+                    }}
                 />
                 <canvas
                     ref={canvasRef}
-                    width="480"
-                    height="360"
+                    width="500"
+                    height="500"
                     style={{ position: "absolute", top: 0, left: 0, transform: "scaleX(-1)" }}
                 />
                 <ToggleButton
+                    style={{
+                        position:'absolute',
+                        right:'10px',
+                        top:'10px',
+                    }}
                     id='supportBt'
                     value="check"
                     selected={!support}
@@ -270,6 +274,7 @@ export default function KYC_Step3(prop: KYC_Step_Props) {
                 </ToggleButton>
             </div>
             
+
             <div className="KYC_vid_info">
                 <p style={{margin:'5px 0 15px 0 ', height:15}}> {warning}</p>
                 <h4 style={{width:'100%', background:'red',color:'white', borderRadius:10}}>{recordErr.current}</h4>

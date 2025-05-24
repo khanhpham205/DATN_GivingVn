@@ -5,7 +5,7 @@ const { auth, ckAdmin } = require('../middlewares/auth')
 const C_donation = require('../controllers/C_donation');
 const C_thanhtoan = require('../controllers/C_thanhtoan');
 
-router.post('/donate/:id'     , auth, C_donation.donate);
+router.post('/donate/:id'       , auth, C_donation.addDonation);
 
 router.post('/donate/vnpay/:id' , auth, 
     C_donation.checkDonate, 
@@ -16,13 +16,6 @@ router.post('/donate/momo/:id' , auth,
     C_donation.checkDonate, 
     C_donation.MOMO_createPayment
 );
-
-
-
-
-
-
-
 
 
 

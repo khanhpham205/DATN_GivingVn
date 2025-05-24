@@ -11,6 +11,9 @@ import { useRouter} from 'next/navigation';
 import { toast } from "react-toastify";
 type Step = "front" | "back" | "video";
 
+
+// import '../Account.css'
+
 export default function KYCPage(){
     const router = useRouter()
 

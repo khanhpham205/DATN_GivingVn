@@ -34,7 +34,6 @@ const roleWhiteList = [
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const router = useRouter();
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setuser] = useState(null);
@@ -54,12 +53,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             })
             if(a.status==200 && a.data.userId){
                 setIsLoggedIn(true)
-                setuser(a.data)
-                
+                setuser(a.data)                
                 if(roleWhiteList.includes(a.data.role)){
                     setisadmin(a.data.role)
                 }else{
-                    setisadmin(false)
+                    setisadmin(undefined)
                 }
             }
             return;
@@ -74,7 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const logout = async() => {
         localStorage.removeItem('JWT')
         setIsLoggedIn(false)
-        setisadmin(false)
+        setisadmin(undefined)
         setuser(null)
         // await checkuser()
     };

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Gooey Bubble Drag</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background: #0f172a;
+            }
+
+            svg {
+                display: none;
+            }
+
+            .goo-container {
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                filter: url(#goo);
+            }
+
+            .bubble {
+                aspect-ratio: 1;
+                width: 100px;
+                background: darkcyan;
+                border-radius: 100vw;
+                position: absolute;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 20px;
+                font-weight: bold;
+                cursor: grab;
+                user-select: none;
+                transition: filter 0.2s;
+            }
+
+            .bubble:active {
+                cursor: grabbing;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- SVG Gooey Filter -->
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <filter id="goo">
+                <feGaussianBlur
+                    in="SourceGraphic"
+                    stdDeviation="10"
+                    result="blur"
+                />
+                <feColorMatrix
+                    in="blur"
+                    mode="matrix"
+                    values="1 0 0 0 0  
+              0 1 0 0 0  
+              0 0 1 0 0  
+              0 0 0 20 -10"
+                    result="goo"
+                />
+                <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+        </svg>
+
+        <!-- Bubbles -->
+        <div class="goo-container">
+            <div class="bubble" style="top: 100px; left: 100px">1</div>
+            <div class="bubble" style="top: 220px; left: 130px; width: 500px; height: 20px;">
+                2
+            </div>
+            <div class="bubble" style="top: 340px; left: 100px">3</div>
+        </div>
+
+        <!-- JS Drag Logic -->
+        <script>
+            document.querySelectorAll(".bubble").forEach((el) => {
+                let isDragging = false;
+                let offsetX = 0,
+                    offsetY = 0;
+
+                el.addEventListener("mousedown", (e) => {
+                    isDragging = true;
+                    offsetX = e.clientX - el.offsetLeft;
+                    offsetY = e.clientY - el.offsetTop;
+                    el.style.zIndex = 999;
+                });
+
+                document.addEventListener("mousemove", (e) => {
+                    if (!isDragging) return;
+                    el.style.left = e.clientX - offsetX + "px";
+                    el.style.top = e.clientY - offsetY + "px";
+                });
+
+                document.addEventListener("mouseup", () => {
+                    isDragging = false;
+                });
+            });
+        </script>
+    </body>
+</html>

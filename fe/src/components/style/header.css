@@ -2,6 +2,7 @@ nav#usernav{
     background: #F2F2F2;
     height: 100px;
 }
+
 #nav_register{
     /* grid-column: 12/13; */
     display: flex;
